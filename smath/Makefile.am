@@ -1,7 +1,7 @@
 # -*- Makefile -*-
 
 AM_CPPFLAGS = ${regular_CPPFLAGS}
-AM_CFLAGS   = ${regular_CFLAGS}
+AM_CFLAGS   = ${regular_CFLAGS} ${libHX_CFLAGS}
 
 noinst_PROGRAMS = \
 	graph-fanout \
