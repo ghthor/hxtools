@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 #
 #	spec-beautifier - make .spec files shine again
-#	Copyright © Jan Engelhardt <jengelh [at] medozas de>, 2010
+#	Copyright © Jan Engelhardt <jengelh [at] medozas de>, 2010-2011
 #
 #	This program is free software; you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
@@ -172,7 +172,7 @@ sub process_package
 	if (s<^Vendor:.*> <>i) {
 		print STDERR "You should not use the Vendor tag. These are set by the Build Service/prjconf.\n";
 	}
-	s<^((?:(?:Build)Requires|Provides|Conflicts|Obsoletes|Recommends|Suggests|Supplements|Enhances)\s*:\s*)(.*)>
+	s<^((?:(?:Build)?Requires|Provides|Conflicts|Obsoletes|Recommends|Suggests|Supplements|Enhances)\s*:\s*)(.*)>
 	 <$1.&process_pkglist($2)>eg;
 
 	if (m<^\s*\%define\s*(name|version|release)\b.*>i) {
