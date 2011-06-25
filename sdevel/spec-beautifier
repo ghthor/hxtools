@@ -27,8 +27,6 @@ sub help
 
 sub process_generic
 {
-	# TBD: %{?jobs:-j%jobs} -> %{?_smp_mflags}
-
 	my($s) = shift @_;
 
 	if ($s->{sectype} eq "shell") {
@@ -127,6 +125,9 @@ sub process_generic
 
 	# Undo crimes on RPM macros
 	s<\%{($IDNAME)}$VRSTOP> <\%$1>g;
+
+	# More Build System freedom
+	s<\%{\?jobs\s*:\s*-j\s*\%jobs}><\%{?_smp_mflags}>g;
 }
 
 sub process_pkglist
