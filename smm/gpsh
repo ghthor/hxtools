@@ -94,16 +94,15 @@ sub queue_select
 
 	print "[$$] Index has ", scalar(@$index), " entries\n";
 	foreach my $arg (@$argv) {
-		my @res = grep { $_->{title} =~ /$arg/i } @$index;
-		foreach (@res) {
-			if ($opt_nomixes && $_->{ofs} != 0) {
-				next;
-			}
-			if (!$opt_quiet) {
-				print "[$$]   \\_ $_->{title} @ ",
-					basename($_->{file}), ":$_->{ofs}\n";
-			}
-			push(@$queue, $_);
+		push(@$queue, grep {
+			$_->{title} =~ /$arg/i &&
+			(!$opt_nomixes || $_->{ofs} == 0)
+		} @$index);
+	}
+	if (!$opt_quiet) {
+		foreach (@$queue) {
+			print "[$$]   \\_ $_->{title} @ ",
+				basename($_->{file}), ":$_->{ofs}\n";
 		}
 	}
 	return $queue;
