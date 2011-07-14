@@ -168,8 +168,10 @@ sub queue_play
 				$file = &workaround_mp3vbr($file);
 			}
 		}
-		system "mplayer", "-vo", "null",
-			$file, "-ss", $entry->{ofs} - 1;
+		if ($entry->{ofs} > 0) {
+			--$entry->{ofs};
+		}
+		system "mplayer", "-vo", "null", $file, "-ss", $entry->{ofs};
 	}
 }
 
