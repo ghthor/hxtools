@@ -9,7 +9,7 @@
 # -F	specifies index file to use
 # -b	Force synchronous index rebuild
 # -l	Only do lookup
-# -q	Try to be quiet
+# -q	Reduce gpsh's own output (don't print playlist)
 # -x	Do not include subtracks in mixes, and do not reindex VBR files.
 # -z	Disable shuffle
 #
@@ -155,7 +155,7 @@ sub queue_play
 
 		print STDERR "\e[1;31m", $entry->{title}, "\e[0m\n"; # ]]
 		if (&filename_timidity($ext)) {
-			my $t = $opt_quiet ? "" : "t";
+			# my $t = $opt_quiet ? "" : "t";
 			system "timidity", "-Os", "-id$t", $file;
 			next;
 		} elsif ($file eq ".umx") {
