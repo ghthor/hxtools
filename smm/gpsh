@@ -10,12 +10,14 @@
 # -b	Force synchronous index rebuild
 # -l	Only do lookup
 # -q	Try to be quiet
+# -x	Do not include subtracks in mixes, and do not reindex VBR files.
 # -z	Disable shuffle
 #
 use Data::Dumper;
 use File::Find::Rule;
 use Getopt::Long;
 use strict;
+my $opt_nomixes;
 my $opt_quiet;
 my @meta_exts = qw(.txt .m3u .tls .lyr);
 
@@ -38,6 +40,7 @@ sub main
 		"F" => \$opt_idxfile,
 		"b" => \$rebuild_index,
 		"l" => \$opt_listonly,
+		"x" => \$opt_nomixes,
 		"z" => sub { $opt_shuffle = 0 },
 		"q" => \$opt_quiet,
 	);
@@ -93,6 +96,9 @@ sub queue_select
 	foreach my $arg (@$argv) {
 		my @res = grep { $_->{title} =~ /$arg/i } @$index;
 		foreach (@res) {
+			if ($opt_nomixes && $_->{ofs} != 0) {
+				next;
+			}
 			print "[$$]   \\_ $_->{title} @ ",
 				basename($_->{file}), ":$_->{ofs}\n";
 			push(@$queue, $_);
@@ -153,7 +159,7 @@ sub queue_play
 		} elsif ($file eq ".umx") {
 			&play_umx($file);
 		} else {
-			if (exists $vbr_map->{$file}) {
+			if (!$opt_nomixes && exists $vbr_map->{$file}) {
 				$file = &workaround_mp3vbr($file);
 			}
 			system "mplayer", "-vo", "null",
