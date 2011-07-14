@@ -165,7 +165,6 @@ sub queue_play
 			system "mplayer", "-vo", "null",
 				$file, "-ss", $entry->{ofs} - 1;
 		}
-		sleep(.3);
 	}
 }
 
