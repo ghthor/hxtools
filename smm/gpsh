@@ -161,8 +161,12 @@ sub queue_play
 			&play_umx($file);
 			next;
 		}
-		if (!$opt_nomixes && exists $vbr_map->{$file}) {
-			$file = &workaround_mp3vbr($file);
+		if (exists $vbr_map->{$file}) {
+			if ($opt_nomixes) {
+				print STDERR "\e[31m(VBR file and reindexing disabled)\e[0m\n";
+			} else {
+				$file = &workaround_mp3vbr($file);
+			}
 		}
 		system "mplayer", "-vo", "null",
 			$file, "-ss", $entry->{ofs} - 1;
