@@ -156,15 +156,16 @@ sub queue_play
 		if (&filename_timidity($ext)) {
 			my $t = $opt_quiet ? "" : "t";
 			system "timidity", "-Os", "-id$t", $file;
+			next;
 		} elsif ($file eq ".umx") {
 			&play_umx($file);
-		} else {
-			if (!$opt_nomixes && exists $vbr_map->{$file}) {
-				$file = &workaround_mp3vbr($file);
-			}
-			system "mplayer", "-vo", "null",
-				$file, "-ss", $entry->{ofs} - 1;
+			next;
 		}
+		if (!$opt_nomixes && exists $vbr_map->{$file}) {
+			$file = &workaround_mp3vbr($file);
+		}
+		system "mplayer", "-vo", "null",
+			$file, "-ss", $entry->{ofs} - 1;
 	}
 }
 
