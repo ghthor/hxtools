@@ -99,8 +99,10 @@ sub queue_select
 			if ($opt_nomixes && $_->{ofs} != 0) {
 				next;
 			}
-			print "[$$]   \\_ $_->{title} @ ",
-				basename($_->{file}), ":$_->{ofs}\n";
+			if (!$opt_quiet) {
+				print "[$$]   \\_ $_->{title} @ ",
+					basename($_->{file}), ":$_->{ofs}\n";
+			}
 			push(@$queue, $_);
 		}
 	}
