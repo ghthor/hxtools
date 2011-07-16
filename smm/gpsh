@@ -261,7 +261,7 @@ sub index_rebuild
 {
 	my $idxfile = shift @_;
 	local(*DB, *FH);
-	my @audio = File::Find::Rule->file()->in(".");
+	my @audio = File::Find::Rule->not_symlink()->file()->in(".");
 	my $track_list = [];
 	my $vbr_map = {};
 
