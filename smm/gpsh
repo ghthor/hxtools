@@ -156,7 +156,7 @@ sub queue_play
 		print STDERR "\e[1;31m", $entry->{title}, "\e[0m\n"; # ]]
 		if (&filename_timidity($ext)) {
 			# my $t = $opt_quiet ? "" : "t";
-			system "timidity", "-Os", "-id$t", $file;
+			system "timidity", "-Os", "-idt", $file;
 			next;
 		} elsif ($file eq ".umx") {
 			&play_umx($file);
