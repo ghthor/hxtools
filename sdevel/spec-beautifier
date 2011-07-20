@@ -99,8 +99,8 @@ sub process_generic
 
 	# Removal of .la files
 	foreach my $re (
-		qr<find \%buildroot -type f -name "\*\.la" -exec rm -f?vf? {} +$>,
-		qr<find \%buildroot -type f -name '\*\.la' -exec rm -f?vf? {} +$>,
+		qr<find \%buildroot -type f -name "\*\.la" -exec rm -f?vf? \{\} \+$>,
+		qr<find \%buildroot -type f -name '\*\.la' -exec rm -f?vf? \{\} \+$>,
 		qr<find \%buildroot -type f -name "\*\.la" -print0 \| xargs -0 rm -f?vf?$>,
 		qr<find \%buildroot -type f -name '\*\.la' -print0 \| xargs -0 rm -f?vf?$>)
 	{
@@ -108,8 +108,8 @@ sub process_generic
 		$tmp =~ s<\s+>< >gs;
 		s<$re><find \%buildroot -type f -name "*.la" -delete -print>;
 	}
-	foreach (qr<find \%buildroot -type f -name "\*\.la" -exec rm -f {} +$>,
-	         qr<find \%buildroot -type f -name '\*\.la' -exec rm -f {} +$>,
+	foreach (qr<find \%buildroot -type f -name "\*\.la" -exec rm -f \{\} \+$>,
+	         qr<find \%buildroot -type f -name '\*\.la' -exec rm -f \{\} \+$>,
 	         qr<find \%buildroot -type f -name "\*\.la" -print0 \| xargs -0 rm -fv$>,
 	         qr<find \%buildroot -type f -name '\*\.la' -print0 \| xargs -0 rm -fv$>)
 	{
