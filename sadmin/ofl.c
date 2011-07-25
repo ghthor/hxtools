@@ -7,7 +7,6 @@
  *	written by Jan Engelhardt, 2008 - 2010
  *	Released in the Public Domain.
  */
-#define _GNU_SOURCE 1
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <errno.h>

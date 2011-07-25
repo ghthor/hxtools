@@ -2,6 +2,7 @@
  *	newns - start a new mount namespace
  *	released in the Public Domain
  */
+#define _GNU_SOURCE 1
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sched.h>
