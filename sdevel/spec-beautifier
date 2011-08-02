@@ -76,9 +76,9 @@ sub process_generic
 	if (m<\%{_initrddir}>g) {
 		print STDERR "$s->{pos}: Try not to use \%_initrddir (this was a typo introduced in rpm) anymore, use \%_initddir. NOTE: SLES11 does not know the new variable yet.\n";
 	}
-	s<\%{_usr}> <\%{_prefix}>g;
-	s<\%{_var}> <\%{_localstatedir}>g;
-	s<\%{_prefix}/+\%{_lib}> <\%{_libdir}>g;
+	s<\%\{_usr\}> <\%{_prefix}>g;
+	s<\%\{_var\}> <\%{_localstatedir}>g;
+	s<\%\{_prefix\}/+\%\{_lib\}> <\%{_libdir}>g;
 
 	# Replace macros by normal forms
 	my %util = ("id_u" => "id -u", "ln_s" => "ln -s",
@@ -86,7 +86,7 @@ sub process_generic
 		"awk" => "gawk", "cc" => "gcc", "cpp" => "gcc -E",
 		"cxx" => "g++", "remsh" => "rsh");
 	foreach my $re (keys %util) {
-		s<\%{__$re}><$util{$re}>g;
+		s<\%\{__$re\}><$util{$re}>g;
 	}
 
 	foreach my $re (qw(aclocal ar as autoconf autoheader automake bzip2
@@ -94,7 +94,7 @@ sub process_generic
 	    libtoolize make mkdir mv nm objcopy objdump patch perl python
 	    ranlib restorecon rm rsh sed semodule ssh strip tar unzip xz))
 	{
-		s<\%{__$re}><$re>g;
+		s<\%\{__$re\}><$re>g;
 	}
 
 	# Removal of .la files
@@ -120,14 +120,14 @@ sub process_generic
 	foreach my $re (qw(centos debian fedora mandrive meego rhel
 	    sles suse ubuntu))
 	{
-		s<\%{${re}_version}><0\%{?${re}_version}>g;
+		s<\%\{${re}_version\}><0\%{?${re}_version}>g;
 	}
 
 	# Undo crimes on RPM macros
-	s<\%{($IDNAME)}$VRSTOP> <\%$1>g;
+	s<\%\{($IDNAME)\}$VRSTOP> <\%$1>g;
 
 	# More Build System freedom
-	s<\%{\?jobs\s*:\s*-j\s*\%jobs}><\%{?_smp_mflags}>g;
+	s<\%\{\?jobs\s*:\s*-j\s*\%jobs\}><\%{?_smp_mflags}>g;
 }
 
 sub process_pkglist
