@@ -1,0 +1,25 @@
+.TH googtts 1 "2011-08-30" "hxtools" "hxtools"
+.SH Name
+googtts \(em call Google's text-to-speech interface
+.SH Syntax
+.PP
+\fBgoogtts\fP \fIlanguage\fP \fIwords\fP...
+.SH Description
+.PP
+Makes a HTTP request to the Google TTS (text-to-speech) converter, feeding it
+the given \fIwords\fP, requested using \fIlangugage\fP-specific articulation.
+The interface currently caps and rejects requests with more than 100 Unicode
+characters (spaces count towards this too).
+.PP
+As the TTS output is currently MPEG Layer-3, it is sent to the program mpg123
+if stdout is a tty. Otherwise, the MPEG stream will be written to stdout, for
+redirection to work as intended.
+.SH Languages
+.PP
+\fIlanguage\fP can either be the desired language's name (in English) or a
+substring thereof, or its two-letter ISO 639-1 code. Run googtts without any
+arguments to get a list over the supported languages.
+.SH Examples
+.PP
+googtts no 
+googtts ja 日本語が好きじゃないのか

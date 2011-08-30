@@ -1,0 +1,113 @@
+#!/usr/bin/perl
+#
+#	Hook up with the Google TTS
+#	written by Jan Engelhardt, 2011
+#	put into the Public Domain
+#
+use LWP::UserAgent;
+use URI;
+use utf8;
+use strict;
+
+my %lang_map = (
+	"af" => "Afrikaans",
+	"ar" => "Arabic",
+	"ca" => "Catalan",
+	"cs" => "Czech",
+	"cy" => "Welsh",
+	"da" => "Danish",
+	"de" => "German",
+	"el" => "Greek",
+	"en" => "English",
+	"es" => "Spanish",
+	"fi" => "Finnish",
+	"fr" => "French",
+	"hi" => "Hindi",
+	"hr" => "Croatian",
+	"ht" => "Haitian Creole",
+	"hu" => "Hungarian",
+	"hy" => "Armenian",
+	"id" => "Indonesian",
+	"is" => "Icelandic",
+	"it" => "Italian",
+	"ja" => "Japanese",
+	"ko" => "Korean",
+	"la" => "Latin",
+	"lv" => "Latvian",
+	"mk" => "Macedonian",
+	"nl" => "Dutch",
+	"no" => "Norwegian",
+	"pl" => "Polish",
+	"pt" => "Portuguese",
+	"ro" => "Romanian",
+	"ru" => "Russian",
+	"sk" => "Slovak",
+	"sq" => "Albanian",
+	"sr" => "Serbian",
+	"sv" => "Swedish",
+	"sw" => "Swahili",
+	"ta" => "Tamil",
+	"tr" => "Turkish",
+	"vi" => "Vietnamese",
+	"zh" => "Chinese",
+);
+
+&main();
+
+sub main
+{
+	if (scalar(@ARGV) < 1) {
+		print "Available languages:\n";
+		print "--------------------\n";
+		foreach my $key (sort keys %lang_map) {
+			printf " %-5s\t%s\n", $key, $lang_map{$key};
+		}
+		exit(1);
+	}
+
+	my $lang = shift @ARGV;
+	if (!exists($lang_map{$lang}) && length($lang) >= 3) {
+		my @res = grep { $lang_map{$_} =~ /$lang/i } keys %lang_map;
+		if (scalar(@res) == 0) {
+			print "I do not know that language: ", $lang, "\n";
+			exit(1);
+		}
+		$lang = shift @res;
+		print "Chosen $lang:\"", $lang_map{$lang}, "\"\n";
+	}
+
+	my $text;
+	if (scalar(@ARGV) < 1) {
+		print "You specified no text.\n";
+		exit(1);
+	} elsif (scalar(@ARGV) == 1 && $ARGV[0] eq "-") {
+		$text = <>;
+	} else {
+		$text = join(" ", @ARGV);
+	}
+	if (length($text) > 100) {
+		print "Note that the number of input length is capped at 100, and may be rejected if input is longer.\n";
+	}
+
+	my $uri = URI->new();
+	$uri->scheme("http");
+	$uri->host("translate.google.com");
+	$uri->path("/translate_tts");
+	$uri->query_form("tl" => $lang, "ie" => "UTF-8", "q" => $text);
+	my $req = HTTP::Request->new("GET" => $uri);
+	my $ua  = LWP::UserAgent->new();
+	# They don't seem to like libwww/perl at all.
+	$ua->agent("");
+	my $res = $ua->request($req);
+	if (!$res->is_success) {
+		print $res->status_line();
+		exit(1);
+	}
+	if (-t 1) {
+		open(FH, "|mpg123 -v -");
+		print FH $res->decoded_content();
+		close FH;
+	} else {
+		print $res->decoded_content();
+	}
+}
