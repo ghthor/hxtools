@@ -322,16 +322,8 @@ sub index_rebuild
 sub index_read
 {
 	my $idxfile = shift @_;
-	local *DB;
-	my $VAR1;
-	my $VAR2;
-
-	if (!open(DB, "< $idxfile")) {
-		die "[$$] Could not read from $idxfile: $!\n";
-	}
-	eval join("", <DB>);
-	close DB;
-	return ($VAR1, $VAR2);
+	do $idxfile || die "[$$] Could not read from $idxfile: $!\n";
+	return ($::VAR1, $::VAR2);
 }
 
 sub s_random
