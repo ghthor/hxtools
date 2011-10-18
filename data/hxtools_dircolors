@@ -65,6 +65,7 @@ EXEC		1;31
 
 # program sources and thelike (green)
 .C	0;32	# C++ program
+.H	0;32	# C++ include files
 .S	0;32	# unpreprocessed GNU Assembler source
 .acs	0;32	# ActionCode script (Doom)
 .asm	0;32	# assembler code
@@ -75,6 +76,7 @@ EXEC		1;31
 #.cgi	0;32	# CGI script or binary
 .cxx	0;32	# C++ program
 .h	0;32	# C include files
+.hh	0;32	# C++ include files
 .hpp	0;32	# C++ include files
 .js	0;32	# JavaScript file
 .ph	0;32	# Perl include files
