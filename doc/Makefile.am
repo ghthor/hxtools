@@ -39,6 +39,7 @@ man_MANS = \
 	recursive_lower.1 \
 	sourcefuncsize.1 \
 	spec-beautifier.1 \
+	ssa2srt.1 \
 	stxdb.1 \
 	sysinfo.1 \
 	tailhex.1 \

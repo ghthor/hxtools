@@ -1,0 +1,15 @@
+.TH ssa2srt 1 "2011-11-20" "hxtools" "hxtools"
+.SH Name
+.PP
+ssa2srt \(em convert SubStation Alpha (SSA) subtitles to SubRip (SRT)
+.SH Syntax
+.PP
+\fBssa2srt\fP [\fIfile\fP...]
+.SH Description
+.PP
+ssa2srt is a rudimentary script to extract the text messages from an SSA file
+and write it out again in SRT format. Since SRT does not know any extensive
+styleformatting, fonts, colors or positions, conversion to SRT is usually
+lossy.
+.PP
+If no filenames are specified, stdin is read. Output always occurs to stdout.

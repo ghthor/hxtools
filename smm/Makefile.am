@@ -8,7 +8,7 @@ bin_PROGRAMS = \
 	oplay
 
 bin_SCRIPTS = \
-	googtts gpsh
+	googtts gpsh ssa2srt
 
 pkglibexec_PROGRAMS = \
 	bsvplay \

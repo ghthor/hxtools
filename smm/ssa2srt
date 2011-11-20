@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+
+use strict;
+
+my $count;
+my @fields;
+
+while (defined(my $line = <>)) {
+	if ($line =~ m/^\[Events\]/) {
+		last;
+	}
+}
+
+while (defined(my $line = <>)) {
+	$line =~ s/[\x0a\x0d]//gs;
+	if ($line =~ m/^Format:\s*/is) {
+		@fields = split(/,\s*/, $');
+		$_ = lc $_ for @fields;
+	}
+	if ($line !~ s/^Dialogue:\s*//s) {
+		next;
+	}
+	if (scalar(@fields) == 0) {
+		die "No Format: line in [Events] section found prior to Dialogue.";
+	}
+	my %attr;
+	@attr{@fields} = split(/,/, $line, scalar(@fields));
+	print ++$count, "\n";
+	print $attr{"start"}, " --> ", $attr{"end"}, "\n";
+	$attr{"text"} =~ s{\\n}{\n}gs;
+	print $attr{"text"}, "\n\n";
+}
