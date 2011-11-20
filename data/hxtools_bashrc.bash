@@ -101,8 +101,8 @@ if [[ "$TERM" == "xterm" ]] && [[ -z "$MC_SID" ]]; then
 fi;
 export PS1_ROOT="$PS1_XTERM\A \h:\$(hxpref_beautify_path) # ";
 export PS1_USER="$PS1_XTERM\A \h:\$(hxpref_beautify_path) > ";
-export PS1_XROOT="$PS1_XTERM\[\e[1;30m\]\A \[\e[0;31m\]\h:\$(hxpref_beautify_path) \[\e[1m\]#\[\e[0m\] ";
-export PS1_XUSER="$PS1_XTERM\[\e[1;30m\]\A \[\e[0;32m\]\h:\$(hxpref_beautify_path) \[\e[0;1m\]>\[\e[0m\] ";
+export PS1_XROOT="$PS1_XTERM\[\e[0;1;30m\]\A \[\e[0;31m\]\h:\$(hxpref_beautify_path) \[\e[1m\]#\[\e[0m\] ";
+export PS1_XUSER="$PS1_XTERM\[\e[0;1;30m\]\A \[\e[0;32m\]\h:\$(hxpref_beautify_path) \[\e[0;1m\]>\[\e[0m\] ";
 unset PS1_XTERM
 
 eval "$(/usr/bin/dircolors -b /usr/share/hxtools/hxtools_dircolors)";
