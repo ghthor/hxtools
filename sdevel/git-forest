@@ -176,10 +176,8 @@ sub get_refs
 
 #		chomp(my $up   = $Repo->command("rev-parse", "rebase-merge/upstream"));
 		chomp(my $onto = $Repo->command("rev-parse", "rebase-merge/onto"));
-		chomp(my $old  = $Repo->command("rev-parse", "rebase-merge/head"));
 #		unshift(@{$ret->{$up}}, "rebase/upstream");
 		unshift(@{$ret->{$onto}}, "rebase/onto");
-		unshift(@{$ret->{$old}}, "rebase/saved-HEAD");
 	}
 
 	my $head = $Repo->command("rev-parse", "HEAD");
