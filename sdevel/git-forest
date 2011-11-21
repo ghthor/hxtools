@@ -174,9 +174,7 @@ sub get_refs
 			close $act_fh;
 		}
 
-#		chomp(my $up   = $Repo->command("rev-parse", "rebase-merge/upstream"));
 		chomp(my $onto = $Repo->command("rev-parse", "rebase-merge/onto"));
-#		unshift(@{$ret->{$up}}, "rebase/upstream");
 		unshift(@{$ret->{$onto}}, "rebase/onto");
 	}
 
