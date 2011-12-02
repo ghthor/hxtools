@@ -10,6 +10,7 @@
 use POSIX;
 use strict;
 
+print "(by hxtools sysinfo) ";
 do_hostname();
 do_version();
 do_loc();
