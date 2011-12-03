@@ -7,7 +7,7 @@ AC_PROG_CC
 AM_PROG_CC_C_O
 
 AC_CHECK_HEADERS([lastlog.h paths.h])
-PKG_CHECK_MODULES([libHX], [libHX >= 3.4])
+PKG_CHECK_MODULES([libHX], [libHX >= 3.12])
 AC_SEARCH_LIBS([cap_get_flag], [cap], [libcap_LIBS="$LIBS"; LIBS=""])
 AC_SUBST([libcap_LIBS])
 AM_CONDITIONAL([HAVE_LIBCAP], [test -n "$libcap_LIBS"])

@@ -398,7 +398,8 @@ static int playrec_getopt(int *argc, const char ***argv,
 		HXOPT_TABLEEND,
 	};
 
-	if (HX_getopt(options_table, argc, argv, HXOPT_USAGEONERR) <= 0)
+	if (HX_getopt(options_table, argc, argv, HXOPT_USAGEONERR) !=
+	    HXOPT_ERR_SUCCESS)
 		return 0;
 
 	t_fragsize &= ~0x7FFF0000;

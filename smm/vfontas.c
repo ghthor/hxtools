@@ -145,7 +145,7 @@ static int vf_extract(const char *filename, const char *directory)
 	FILE *out_fp;
 
 	if (stat(directory, &sb) < 0)
-		HX_mkdir(directory);
+		HX_mkdir(directory, S_IRWXUGO);
 	if ((in_fd = open(filename, O_RDONLY)) < 0) {
 		fprintf(stderr, "Could not open %s: %s\n",
 		        filename, strerror(errno));
@@ -196,7 +196,7 @@ static void vf_extract_cpi3(const void *_data,
 	int out_fd;
 
 	for (i = 0; i < cpih->num_fonts; ++i) {
-		HX_mkdir(directory);
+		HX_mkdir(directory, S_IRWXUGO);
 		out_file = HXmc_strinit(directory);
 		HXmc_strcat(&out_file, "/");
 		snprintf(buf, sizeof(buf), "%ux%u.fnt",
@@ -370,7 +370,8 @@ static bool vf_get_options(int *argc, const char ***argv)
 		HXOPT_TABLEEND,
 	};
 
-	if (HX_getopt(options_table, argc, argv, HXOPT_USAGEONERR) <= 0)
+	if (HX_getopt(options_table, argc, argv, HXOPT_USAGEONERR) !=
+	    HXOPT_ERR_SUCCESS)
 		return false;
 	if (Opt.action == CMD_NONE) {
 		fprintf(stderr, "Missing command. Use `vfontas -?` for help.\n");

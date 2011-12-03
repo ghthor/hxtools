@@ -478,7 +478,8 @@ static bool ir_get_options(int *argc, const char ***argv,
 		HXOPT_AUTOHELP,
 		HXOPT_TABLEEND,
 	};
-	if (HX_getopt(options_table, argc, argv, HXOPT_USAGEONERR) <= 0)
+	if (HX_getopt(options_table, argc, argv, HXOPT_USAGEONERR) !=
+	    HXOPT_ERR_SUCCESS)
 		return false;
 
 	if (work_info->device == NULL) {

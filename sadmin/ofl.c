@@ -305,7 +305,8 @@ int main(int argc, const char **argv)
 		fprintf(stderr, "HX_init: %s\n", strerror(-ret));
 		abort();
 	}
-	if (HX_getopt(options_table, &argc, &argv, HXOPT_USAGEONERR) < 0)
+	if (HX_getopt(options_table, &argc, &argv, HXOPT_USAGEONERR) !=
+	    HXOPT_ERR_SUCCESS)
 		goto out;
 	if (argc == 1) {
 		fprintf(stderr, "You need to supply at least a path\n");
