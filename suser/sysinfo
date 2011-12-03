@@ -7,21 +7,26 @@
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation; either version 2 or 3 of the license.
 #
+use Getopt::Long;
 use POSIX;
 use strict;
 
-print "(by hxtools sysinfo) ";
-do_hostname();
-do_version();
-do_loc();
-do_cpuinfo();
-do_loadavg();
-do_meminfo();
-do_disk();
-do_gfx();
+main();
 
-print "\n";
-
+sub main
+{
+	&Getopt::Long::Configure(qw(bundling));
+	print "(by hxtools sysinfo) ";
+	do_hostname();
+	do_version();
+	#do_loc();
+	do_cpuinfo();
+	do_loadavg();
+	do_meminfo();
+	do_disk();
+	do_gfx();
+	print "\n";
+}
 
 sub do_cpuinfo
 {
