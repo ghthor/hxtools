@@ -152,7 +152,7 @@ static int main2(int argc, const char **argv)
 		entry.ut_id[0] = 'P';
 		entry.ut_id[1] = 'X';
 		memcpy(&entry.ut_id[2], &p, 2);
-	} else {
+	} else if (Opt.line != NULL) {
 		size_t sz = strlen(Opt.line);
 		char *str = Opt.line;
 		if (sz > sizeof(entry.ut_id))
