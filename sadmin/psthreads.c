@@ -93,7 +93,7 @@ static void kps_read_status(struct kps_proc_data *task, FILE *fp)
 static void kps_read_stat(struct kps_proc_data *p, FILE *fp)
 {
 	hxmc_t *ln = NULL;
-	char *ptr = ln, *field[__STAT_NFIELDS+1];
+	char *ptr, *field[__STAT_NFIELDS+1];
 
 	if (HX_getl(&ln, fp) == NULL)
 		goto out;
