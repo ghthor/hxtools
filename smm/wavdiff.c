@@ -111,7 +111,7 @@ static inline int16_t clamp16(int32_t x)
 static void wavdiff_matrix_process(struct fdstream *file)
 {
 	unsigned long stream_max = file[0].sb.st_size - file[0].offset;
-	unsigned long stream_count;
+	unsigned long stream_count = 0;
 	int16_t *stream_buf;
 
 	if (file[1].sb.st_size - file[1].offset < stream_max)
