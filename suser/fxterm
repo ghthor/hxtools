@@ -7,6 +7,8 @@
 #		fxterm -f tosh -j -- [other xterm options]
 #
 
+export GTK_IM_MODULE="ibus";
+export QT_IM_MODULE="ibus";
 while [[ "$#" -gt 0 ]]; do
 	case "$1" in
 	(-f)
@@ -14,7 +16,7 @@ while [[ "$#" -gt 0 ]]; do
 		shift 2;
 		;;
 	(-j)
-		export XMODIFIERS="@im=SCIM";
+		export XMODIFIERS="@im=ibus";
 		shift 1;
 		;;
 	(--)
