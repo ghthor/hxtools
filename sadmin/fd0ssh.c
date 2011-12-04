@@ -133,7 +133,7 @@ static int zerossh_setup(int argc, const char **argv)
  */
 static int zerossh_askpass(int in_fd, int out_fd)
 {
-	ssize_t ret;
+	ssize_t ret __attribute__((unused));
 	char *buf, *p;
 
 	buf = malloc(4096);
