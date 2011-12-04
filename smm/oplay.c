@@ -339,8 +339,6 @@ static void getopt_op_kjump(const struct HXoptcb *cbi)
 		return;
 
 	timespec = HX_strdup(cbi->data);
-	s = 0;
-
 	if ((p = strchr(cbi->data, ':')) == NULL) {
 		s = strtoul(cbi->data, NULL, 0);
 	} else {
