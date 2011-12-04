@@ -170,7 +170,7 @@ static bool ofl_taskfd(const char *mnt, const char *path,
 	const char *de;
 	char tmp[256];
 	struct HXdir *dir;
-	bool ret;
+	bool ret = false;
 
 	dir = HXdir_open(path);
 	if (dir == NULL)
