@@ -1,13 +1,14 @@
 /*
- *	Print architecture characteristics
+ *	Print architecture characteristics - Linux kernel module variant
  *	written by Jan Engelhardt, 2011
  *	placed into the Public Domain
  */
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <wchar.h>
-#include <netinet/in.h>
+#include <linux/module.h>
+#include <linux/nls.h>
+#include <linux/printk.h>
+#include <linux/types.h>
+#include <linux/in.h>
+#include <linux/in6.h>
 
 struct x16 {
 	uint8_t a;
@@ -32,7 +33,7 @@ struct x64 {
 	extern int SIZEOF_##vname, ALIGNOF_##vname; \
 	int SIZEOF_##vname = sizeof(type), ALIGNOF_##vname = __alignof__(type);
 #define t(type) \
-	printf("%14s  %7zu  %7zu\n", #type, sizeof(type), __alignof__(type))
+	printk("%14s  %7zu  %7zu\n", #type, sizeof(type), __alignof__(type))
 
 p(char);
 p(short);
@@ -44,7 +45,7 @@ p(double);
 q(long double, longdouble);
 q(void *, voidptr);
 q(void (*)(void), funcptr);
-p(intptr_t);
+p(uintptr_t);
 p(wchar_t);
 p(size_t);
 p(off_t);
@@ -63,10 +64,9 @@ q(struct sockaddr, sockaddr);
 q(struct sockaddr_in, sockaddr_in);
 q(struct sockaddr_in6, sockaddr_in6);
 
-#ifndef WITHOUT_MAIN
-int main(void)
+static int __init kcct_init(void)
 {
-	printf("%14s  %7s  %7s\n", "TYPE", "SIZEOF", "ALIGNOF");
+	printk("%14s  %7s  %7s\n", "TYPE", "SIZEOF", "ALIGNOF");
 	t(char);
 	t(short);
 	t(int);
@@ -77,7 +77,7 @@ int main(void)
 	t(long double);
 	t(void *);
 	t(void (*)(void));
-	t(intptr_t);
+	t(uintptr_t);
 	t(size_t);
 	t(wchar_t);
 	t(off_t);
@@ -96,6 +96,13 @@ int main(void)
 	t(struct sockaddr_in);
 	t(struct sockaddr_in6);
 	t(struct sockaddr_storage);
-	return EXIT_SUCCESS;
+	return -EIO;
 }
-#endif
+
+static void __exit kcct_exit(void)
+{
+}
+
+module_init(kcct_init);
+module_exit(kcct_exit);
+MODULE_LICENSE("GPL and additional rights");
