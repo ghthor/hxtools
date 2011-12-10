@@ -1,12 +1,15 @@
 #!/usr/bin/perl
 #
+#	git-revert statistics
+#	Author: Jan Engelhardt, 2008
+#	released into the Public Domain
+#
 #	git log --pretty="format:<%an>%s" v2.6.25..HEAD | ./git-revert-stats
 #
 #	-n NUM    limit output to NUM developers
 #	-o        omit developers with only one revert/commit
 #	-v        debug debug debug output
 #
-
 use Getopt::Long;
 use Git;
 use strict;

@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# Author: Jan Engelhardt, 2011, placed into the Public Domain
 
 use strict;
 

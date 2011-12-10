@@ -1,4 +1,9 @@
 #!/bin/bash
+#
+#	git-blame based authoring statistics
+#	Author: Jan Engelhardt, 2008-2009
+#	released into the Public Domain
+#
 
 if [[ "$1" == "--tsvn" ]]; then
 	#

@@ -1,5 +1,9 @@
 #!/usr/bin/perl
-
+#
+#	git-blame based authoring statistics
+#	Author: Jan Engelhardt, 2009
+#	released into the Public Domain
+#
 use Getopt::Long;
 use POSIX qw(ceil);
 use strict;

@@ -1,3 +1,8 @@
+/*
+ *	Print current process capabilities in human-readable fashion
+ *	Author: Jan Engelhardt, 2011
+ *	released into the Public Domain
+ */
 #include <sys/types.h>
 #include <stdio.h>
 #include <stdlib.h>

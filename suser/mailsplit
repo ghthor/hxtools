@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# Author: Jan Engelhardt, 2007-2008, placed into the Public Domain
 
 use Getopt::Long;
 use strict;

@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 #
+#	quicker tar + better defaults
+#	Author: Jan Engelhardt, 2007-2010, placed into the Public Domain
 #	Achieve higher compression by using dedicated file sorting
 #	to put similar blocks next to each other.
 #
