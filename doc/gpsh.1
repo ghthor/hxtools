@@ -4,7 +4,8 @@
 gpsh \(em grep and play my audio files from shell
 .SH Syntax
 .PP
-\fBgpsh\fP [\fB\-F\fP \fIindex.m9u\fP] [\fB\-blvxz\fP] \fIpatterns\fP...
+\fBgpsh\fP [\fB\-F\fP \fIindex.m9u\fP] [\fB-OM,\fP\fIopt\fP]
+[\fB\-blvxz\fP] \fIpatterns\fP...
 .SH Description
 .PP
 Greps the master index file by the specified patterns and plays back any
@@ -18,6 +19,9 @@ When no pattern is given, all files are selected.
 Give the path to the master index file. It is just a dump of the internal array
 state in Perl form, so M9U is not exactly a format of its own. This index
 contains: filename, and title and offset (for subtracks inside mixes).
+.TP
+\fB\-OM,\fP\fImplayer_opt\fP
+Pass an extra argument to mplayer.
 .TP
 \fB\-b\fP
 Do index rebuild in foreground.
@@ -63,3 +67,8 @@ specifying
 gpsh 'dj.doboy.*trancequility'
 .PP
 Would select the grand mix and start at 00:00.
+.SH Extra options
+.PP
+gpsh \-OM,\-af\-clr chillout
+.PP
+Will invoke mplayer instances with the "\-af\-clr" option.

@@ -10,6 +10,7 @@ use Data::Dumper;
 use File::Find::Rule;
 use Getopt::Long;
 use strict;
+my @opt_mplayer;
 my $opt_nomixes;
 my $opt_verbose;
 my @meta_exts = qw(.txt .m3u .tls .lyr);
@@ -36,6 +37,11 @@ sub main
 		"x" => \$opt_nomixes,
 		"z" => sub { $opt_shuffle = 0 },
 		"v" => \$opt_verbose,
+		"O=s" => sub {
+			if ($_[1] =~ s/^M,//) {
+				push(@opt_mplayer, $_[1]);
+			}
+		},
 	);
 	print "[$$] Main program\n";
 	if (scalar(@ARGV) == 0) {
@@ -164,7 +170,7 @@ sub queue_play
 		if ($entry->{ofs} > 0) {
 			--$entry->{ofs};
 		}
-		system "mplayer", "-vo", "null", $file, "-ss", $entry->{ofs};
+		system "mplayer", "-vo", "null", $file, "-ss", $entry->{ofs}, @opt_mplayer;
 	}
 }
 
