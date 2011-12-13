@@ -6,19 +6,12 @@
 #	released in the Public Domain
 #	written by Jan Engelhardt, 2010
 #
-# -F	specifies index file to use
-# -b	Force synchronous index rebuild
-# -l	Only do lookup
-# -q	Reduce gpsh's own output (don't print playlist)
-# -x	Do not include subtracks in mixes, and do not reindex VBR files.
-# -z	Disable shuffle
-#
 use Data::Dumper;
 use File::Find::Rule;
 use Getopt::Long;
 use strict;
 my $opt_nomixes;
-my $opt_quiet;
+my $opt_verbose;
 my @meta_exts = qw(.txt .m3u .tls .lyr);
 
 &main();
@@ -42,7 +35,7 @@ sub main
 		"l" => \$opt_listonly,
 		"x" => \$opt_nomixes,
 		"z" => sub { $opt_shuffle = 0 },
-		"q" => \$opt_quiet,
+		"v" => \$opt_verbose,
 	);
 	print "[$$] Main program\n";
 	if (scalar(@ARGV) == 0) {
@@ -99,7 +92,7 @@ sub queue_select
 			(!$opt_nomixes || $_->{ofs} == 0)
 		} @$index);
 	}
-	if (!$opt_quiet) {
+	if ($opt_verbose) {
 		foreach (@$queue) {
 			print "[$$]   \\_ $_->{title}\n";
 		}
@@ -154,7 +147,7 @@ sub queue_play
 
 		print STDERR "\e[1;31m", $entry->{title}, "\e[0m\n"; # ]]
 		if (&filename_timidity($ext)) {
-			# my $t = $opt_quiet ? "" : "t";
+			# my $t = $opt_verbose ? "t" : "";
 			system "timidity", "-Os", "-idt", $file;
 			next;
 		} elsif ($file eq ".umx") {
@@ -219,7 +212,7 @@ sub play_umx
 	close IN;
 	close OUT;
 
-	system "timidity", "-Os", "-id".($opt_quiet ? "" : "t"), $of;
+	system "timidity", "-Os", "-id".($opt_verbose ? "t" : ""), $of;
 	unlink $of;
 }
 
