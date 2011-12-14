@@ -33,7 +33,7 @@ noinst_SCRIPTS = \
 	rpmdep.pl
 
 ofl_LDADD              = ${libHX_LIBS}
-printcaps_LDADD        = ${libcap_LIBS}
+printcaps_LDADD        = ${libHX_LIBS} ${libcap_LIBS}
 proc_iomem_count_LDADD = ${libHX_LIBS}
 psthreads_LDADD        = ${libHX_LIBS}
 utmp_register_LDADD    = ${libHX_LIBS}
