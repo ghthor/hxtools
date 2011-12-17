@@ -3,12 +3,12 @@ AC_INIT([hxtools], [20111204])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([config.h])
 AC_PROG_INSTALL
-AM_INIT_AUTOMAKE([-Wall])
+AM_INIT_AUTOMAKE([-Wall foreign subdir-objects])
 AC_PROG_CC
 AM_PROG_CC_C_O
 
 AC_CHECK_HEADERS([lastlog.h paths.h])
-PKG_CHECK_MODULES([libHX], [libHX >= 3.12])
+PKG_CHECK_MODULES([libHX], [libHX >= 3.12.1])
 AC_SEARCH_LIBS([cap_get_flag], [cap], [libcap_LIBS="$LIBS"; LIBS=""])
 AC_SUBST([libcap_LIBS])
 AM_CONDITIONAL([HAVE_LIBCAP], [test -n "$libcap_LIBS"])
