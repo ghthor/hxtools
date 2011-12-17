@@ -108,7 +108,7 @@ sub queue_select
 
 sub filename_nonext
 {
-	return (shift(@_) =~ /^(.*)\.[^\.]+$/);
+	return (shift(@_) =~ /^(.*)\.[^\.]+$/)[0];
 }
 
 sub filename_ext
@@ -269,7 +269,7 @@ sub index_rebuild
 		if (&filename_meta($ext)) {
 			next;
 		}
-		push(@$track_list, {title => &filename_nonext($file),
+		push(@$track_list, {title => "/".&filename_nonext($file),
 		     file => $file, ofs => 0});
 	}
 
@@ -299,7 +299,7 @@ sub index_rebuild
 			}
 			$s = $h * 3600 + $m * 60 + $s;
 			my $entry = {
-				title => "$bf,$title",
+				title => "/$bf,$title",
 				file => $af,
 				ofs => $s,
 			};
