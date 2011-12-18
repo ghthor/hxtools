@@ -1,6 +1,6 @@
 # -*- Makefile -*-
 
-bin_SCRIPTS = \
+dist_bin_SCRIPTS = \
 	checkbrack \
 	cwdiff \
 	git-author-stat \
@@ -13,7 +13,7 @@ bin_SCRIPTS = \
 pkglibexec_PROGRAMS = \
 	cctypeinfo
 
-pkglibexec_SCRIPTS = \
+dist_pkglibexec_SCRIPTS = \
 	diff2php \
 	doxygen-kerneldoc-filter \
 	git-blame-stats \

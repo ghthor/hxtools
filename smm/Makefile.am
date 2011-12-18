@@ -7,7 +7,7 @@ CLEANFILES  = omixer orec
 bin_PROGRAMS = \
 	oplay
 
-bin_SCRIPTS = \
+dist_bin_SCRIPTS = \
 	googtts gpsh ssa2srt
 
 pkglibexec_PROGRAMS = \
@@ -16,7 +16,7 @@ pkglibexec_PROGRAMS = \
 	vfontas \
 	wavdiff
 
-pkglibexec_SCRIPTS  = \
+dist_pkglibexec_SCRIPTS  = \
 	extract_d3pkg \
 	extract_dxhog \
 	extract_f3pod \
@@ -36,6 +36,8 @@ qplay_SOURCES   = qplay.c pcspkr_pcm.c
 qplay_LDADD     = ${libHX_LIBS} -lm
 wavdiff_LDADD   = ${libHX_LIBS}
 vfontas_LDADD   = ${libHX_LIBS}
+
+EXTRA_DIST = pcspkr.h
 
 omixer${EXEEXT}: oplay${EXEEXT}
 	if [ ! -e omixer ]; then ln -s oplay omixer; fi;

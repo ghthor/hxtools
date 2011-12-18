@@ -7,7 +7,7 @@ bin_PROGRAMS = \
 	newns \
 	ofl
 
-bin_SCRIPTS = \
+dist_bin_SCRIPTS = \
 	pmap_dirty \
 	su1
 
@@ -18,7 +18,7 @@ pkglibexec_PROGRAMS = \
 	psthreads \
 	utmp_register
 
-pkglibexec_SCRIPTS = \
+dist_pkglibexec_SCRIPTS = \
 	logontime \
 	netload \
 	recursive_lower \
@@ -27,7 +27,7 @@ pkglibexec_SCRIPTS = \
 noinst_PROGRAMS = \
 	xfs_irecover
 
-noinst_SCRIPTS = \
+dist_noinst_SCRIPTS = \
 	filenameconv \
 	raregetty \
 	rpmdep.pl

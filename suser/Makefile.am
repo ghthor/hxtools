@@ -8,7 +8,7 @@ bin_PROGRAMS = \
 	tailhex \
 	xcp
 
-bin_SCRIPTS = \
+dist_bin_SCRIPTS = \
 	fduphl \
 	fxterm \
 	pesubst \
@@ -16,7 +16,7 @@ bin_SCRIPTS = \
 	sysinfo \
 	wktimer
 
-pkglibexec_SCRIPTS = \
+dist_pkglibexec_SCRIPTS = \
 	mailsplit
 
 tailhex_LDADD = ${libHX_LIBS}

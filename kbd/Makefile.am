@@ -6,16 +6,17 @@ x11misc_DATA = ${x11fonts}
 CLEANFILES   = ${x11fonts}
 
 qwertydir    = ${keymapdir}/i386/qwerty
-qwerty_DATA  = us_jng.map us_jng_vaiou3.map
+dist_qwerty_DATA  = us_jng.map us_jng_vaiou3.map
 
 qwertzdir    = ${keymapdir}/i386/qwertz
-qwertz_DATA  = de_jng.map
+dist_qwertz_DATA  = de_jng.map
 
-vgafont_DATA = ahnv.fnt ati.fnt gotik-textura.fnt ital.fnt mux.fnt \
+dist_vgafont_DATA = ahnv.fnt ati.fnt gotik-textura.fnt ital.fnt mux.fnt \
                neuropol.fnt nvidia.fnt \
                rhx.fnt tosh.fnt \
                ega437_8x16.fnt ega437_8x14.fnt ega437_8x8.fnt
 
+EXTRA_DIST = ahnv.bdf mux.bdf rhx.bdf tosh.bdf
 BDFTOPCF = bdftopcf <"$<" | gzip -9c >"$@"
 
 ahnv.pcf.gz: ahnv.bdf

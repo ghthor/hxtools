@@ -1,8 +1,8 @@
 # -*- Makefile -*-
 
-sysconf_DATA = hxloginpref.conf
+dist_sysconf_DATA = hxloginpref.conf
 
-data_DATA = \
+dist_data_DATA = \
 	gitconfig \
 	hxloginpref.conf \
 	hxtools_bashrc.bash \

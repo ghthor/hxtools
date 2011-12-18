@@ -1,6 +1,6 @@
 # -*- Makefile -*-
 
-man_MANS = \
+dist_man_MANS = \
 	bsvplay.1 \
 	cctypeinfo.1 \
 	checkbrack.1 \
