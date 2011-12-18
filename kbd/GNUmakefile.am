@@ -16,5 +16,16 @@ vgafont_DATA = ahnv.fnt ati.fnt gotik-textura.fnt ital.fnt mux.fnt \
                rhx.fnt tosh.fnt \
                ega437_8x16.fnt ega437_8x14.fnt ega437_8x8.fnt
 
-%.pcf.gz: %.bdf
-	bdftopcf <"$<" | gzip -9c >"$@";
+BDFTOPCF = bdftopcf <"$<" | gzip -9c >"$@"
+
+ahnv.pcf.gz: ahnv.bdf
+	${BDFTOPCF}
+
+mux.pcf.gz: mux.bdf
+	${BDFTOPCF}
+
+rhx.pcf.gz: rhx.bdf
+	${BDFTOPCF}
+
+tosh.pcf.gz: tosh.bdf
+	${BDFTOPCF}
