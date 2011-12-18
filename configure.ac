@@ -43,6 +43,6 @@ regular_CFLAGS="-Wall -Waggregate-return -Wmissing-declarations \
 AC_SUBST([regular_CPPFLAGS])
 AC_SUBST([regular_CFLAGS])
 AC_CONFIG_FILES([Makefile data/Makefile doc/Makefile
-	kbd/GNUmakefile sadmin/Makefile sdevel/Makefile smath/Makefile
+	kbd/Makefile sadmin/Makefile sdevel/Makefile smath/Makefile
 	smm/Makefile suser/Makefile])
 AC_OUTPUT
