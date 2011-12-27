@@ -43,6 +43,9 @@ sub main
 			}
 		},
 	);
+	if ($opt_listonly) {
+		$opt_verbose = 1;
+	}
 	print "[$$] Main program\n";
 	if (scalar(@ARGV) == 0) {
 		@ARGV = ("");
