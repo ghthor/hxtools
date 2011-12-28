@@ -27,6 +27,10 @@ The name stems from German and indicates parking prohibition (you probably
 already guessed that), or more commonly known as a "no parking" zone.
 .SH Options
 .PP
+.TP
+\fB\-b\fP \fIsize\fP
+The size of a read request, in kilobytes (defaults to 64 KB).
+.TP
 \fB\-r\fP \fIsize\fP
 The guard window size (defaults to 16 MB). When requesting a block off the
 disk, the hardware might choose to cache more parts, as it will have to hover
@@ -34,7 +38,7 @@ and wait over a particular track for the desired sector. If the next random
 block we choose happens to be already cached because of that, the head unload
 timer will not be reset. To avoid this, if the new random location falls within
 \fIsize\fP kilobytes, we shuffle out a new location and retry.
-.PP
+.TP
 \fB\-t\fP \fIsecs\fP
 The interval in which to request blocks (defaults to 4 sec).
 .SH See also

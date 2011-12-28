@@ -40,6 +40,7 @@ struct pv_bdev_entry {
 static HXLIST_HEAD(pv_bdev_list);
 static struct timespec pv_req_interval = {4, 0};
 static unsigned long long pv_disk_window = 16384;
+static unsigned long long pv_buffer_size = 64;
 
 static const char *pv_readable_size(char *buf, size_t bufsize, size_t size)
 {
@@ -67,13 +68,18 @@ static bool pv_in_window(size_t prev_pos, size_t new_pos,
 	return left <= new_pos && new_pos < right;
 }
 
-static void pv_mainloop(void)
+static int pv_mainloop(void)
 {
 	const struct pv_bdev_entry *e;
-#define bsiz 64*1024
-	char buf[bsiz];
 	unsigned long long new_pos, prev_pos = 0;
 	ssize_t read_ret;
+	char *buffer;
+
+	buffer = malloc(pv_buffer_size);
+	if (buffer == NULL) {
+		fprintf(stderr, "Error allocating %llu bytes\n", pv_buffer_size);
+		return EXIT_FAILURE;
+	}
 
 	while (true) {
 	HXlist_for_each_entry(e, &pv_bdev_list, anchor) {
@@ -87,7 +93,7 @@ static void pv_mainloop(void)
 			fprintf(stderr, "%s: lseek: %s\n",
 			        e->path, strerror(errno));
 
-		read_ret = read(e->fd, buf, bsiz);
+		read_ret = read(e->fd, buffer, pv_buffer_size);
 		if (read_ret < 0)
 			fprintf(stderr, "%s: read: %s\n",
 			        e->path, strerror(errno));
@@ -95,6 +101,9 @@ static void pv_mainloop(void)
 		nanosleep(&pv_req_interval, NULL);
 	}
 	}
+
+	free(buffer);
+	return EXIT_SUCCESS;
 }
 
 static bool pv_open_device(const char *path)
@@ -134,6 +143,8 @@ static bool pv_get_options(int *argc, const char ***argv)
 	const char **arg;
 	double intv = 0;
 	struct HXoption options_table[] = {
+		{.sh = 'b', .type = HXTYPE_ULLONG, .ptr = &pv_buffer_size,
+		 .help = "Buffer size, in KB (default: 64)", .htyp = "kbytes"},
 		{.sh = 'r', .type = HXTYPE_ULLONG, .ptr = &pv_disk_window,
 		 .help = "Guard window size, in KB (default: 16384)",
 		 .htyp = "kbytes"},
@@ -152,6 +163,7 @@ static bool pv_get_options(int *argc, const char ***argv)
 		pv_req_interval.tv_sec  = intv;
 		pv_req_interval.tv_nsec = modf(intv, &intv);
 	}
+	pv_buffer_size <<= 10;
 	pv_disk_window <<= 10;
 
 	if (*argc < 2) {
