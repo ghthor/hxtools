@@ -55,17 +55,33 @@ static const char *pv_readable_size(char *buf, size_t bufsize, size_t size)
 	return buf;
 }
 
+static bool pv_in_window(size_t prev_pos, size_t new_pos,
+    const struct pv_bdev_entry *e)
+{
+	size_t left, right;
+
+	if (e->size <= pv_disk_window)
+		return false;
+	left  = (prev_pos <= pv_disk_window) ? 0 : prev_pos - pv_disk_window;
+	right = prev_pos + pv_disk_window;
+	return left <= new_pos && new_pos < right;
+}
+
 static void pv_mainloop(void)
 {
 	const struct pv_bdev_entry *e;
 #define bsiz 64*1024
 	char buf[bsiz];
-	unsigned long long new_pos;
+	unsigned long long new_pos, prev_pos = 0;
 	ssize_t read_ret;
 
 	while (true) {
 	HXlist_for_each_entry(e, &pv_bdev_list, anchor) {
 		new_pos = HX_drand(0, e->size);
+		if (pv_in_window(prev_pos, new_pos, e)) {
+			printf("%s: %llu (in guard window)\n", e->path, new_pos);
+			continue;
+		}
 		printf("%s: %llu\n", e->path, new_pos);
 		if (lseek(e->fd, new_pos, SEEK_SET) < 0)
 			fprintf(stderr, "%s: lseek: %s\n",
