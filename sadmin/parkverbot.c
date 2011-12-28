@@ -115,8 +115,10 @@ static bool pv_get_options(int *argc, const char ***argv)
 	    HXOPT_ERR_SUCCESS)
 		return false;
 
-	pv_req_interval.tv_sec  = intv;
-	pv_req_interval.tv_nsec = modf(intv, &intv);
+	if (intv != 0) {
+		pv_req_interval.tv_sec  = intv;
+		pv_req_interval.tv_nsec = modf(intv, &intv);
+	}
 	pv_disk_window <<= 10;
 	for (arg = *argv; *arg != NULL; ++arg)
 		pv_open_device(*arg);
