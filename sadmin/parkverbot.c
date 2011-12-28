@@ -120,7 +120,13 @@ static bool pv_get_options(int *argc, const char ***argv)
 		pv_req_interval.tv_nsec = modf(intv, &intv);
 	}
 	pv_disk_window <<= 10;
-	for (arg = *argv; *arg != NULL; ++arg)
+
+	if (*argc < 2) {
+		fprintf(stderr, "You need to specify some devices to "
+		        "keep spinning.\n");
+		return false;
+	}
+	for (arg = &(*argv)[1]; *arg != NULL; ++arg)
 		pv_open_device(*arg);
 	return true;
 }
