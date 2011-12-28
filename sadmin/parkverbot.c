@@ -41,6 +41,20 @@ static HXLIST_HEAD(pv_bdev_list);
 static struct timespec pv_req_interval = {4, 0};
 static unsigned long long pv_disk_window = 16384;
 
+static const char *pv_readable_size(char *buf, size_t bufsize, size_t size)
+{
+	static const char unit_names[][2] =
+		{"", "K", "M", "G", "T", "P", "E", "Y", "Z"};
+	unsigned int unit_idx = 0;
+
+	while (size >= 8192 && unit_idx < ARRAY_SIZE(unit_names) - 1) {
+		++unit_idx;
+		size /= 1024;
+	}
+	snprintf(buf, bufsize, "%zu %sB", size, unit_names[unit_idx]);
+	return buf;
+}
+
 static void pv_mainloop(void)
 {
 	const struct pv_bdev_entry *e;
@@ -70,6 +84,7 @@ static void pv_mainloop(void)
 static bool pv_open_device(const char *path)
 {
 	struct pv_bdev_entry *e;
+	char buf[32];
 	size_t size;
 	int fd;
 
@@ -92,6 +107,8 @@ static bool pv_open_device(const char *path)
 	e->path = path;
 	e->size = size;
 	e->fd   = fd;
+	printf("Added %s (size %s)\n", e->path,
+	       pv_readable_size(buf, sizeof(buf), e->size));
 	HXlist_add_tail(&pv_bdev_list, &e->anchor);
 	return true;
 }
