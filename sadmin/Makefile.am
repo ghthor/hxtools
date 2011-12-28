@@ -4,6 +4,7 @@ AM_CPPFLAGS = ${regular_CPPFLAGS} ${libHX_CFLAGS}
 AM_CFLAGS   = ${regular_CFLAGS}
 
 bin_PROGRAMS = \
+	clock_info \
 	newns \
 	ofl
 
@@ -32,6 +33,7 @@ dist_noinst_SCRIPTS = \
 	raregetty \
 	rpmdep.pl
 
+clock_info_LDADD       = -lrt
 ofl_LDADD              = ${libHX_LIBS}
 printcaps_LDADD        = ${libcap_LIBS}
 proc_iomem_count_LDADD = ${libHX_LIBS}

@@ -4,6 +4,7 @@ dist_man_MANS = \
 	bsvplay.1 \
 	cctypeinfo.1 \
 	checkbrack.1 \
+	clock_info.1 \
 	cwdiff.1 \
 	declone.1 \
 	diff2php.1 \
