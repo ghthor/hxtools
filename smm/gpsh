@@ -262,11 +262,13 @@ sub index_rebuild
 {
 	my $idxfile = shift @_;
 	local(*DB, *FH);
-	my @audio = File::Find::Rule->not_symlink()->file()->in(".");
+	my @audio;
 	my $track_list = [];
 	my $vbr_map = {};
 
 	print "[$$] Rebuilding index\n";
+	@audio = File::Find::Rule->not_symlink()->file()->in(".");
+
 	foreach my $file (@audio) {
 		my $ext = &filename_ext($file);
 		if (&filename_meta($ext)) {
