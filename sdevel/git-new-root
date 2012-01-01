@@ -1,4 +1,6 @@
 #!/bin/bash
+# written up by Jan Engelhardt, 2008
+# Public Domain
 
 if [[ -z "$1" ]]; then
 	echo "Need a branch name";

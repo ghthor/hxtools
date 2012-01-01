@@ -1,4 +1,6 @@
 #!/bin/bash
+# written up by Jan Engelhardt, 2008
+# Public Domain
 
 current_branch=$(pcregrep -o '(?<=^ref: refs/heads/).+$' .git/HEAD);
 if [[ -z "$current_branch" ]]; then

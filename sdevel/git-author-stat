@@ -1,7 +1,8 @@
 #!/bin/bash
+# written up by Jan Engelhardt, 2008
+# Public Domain
 
 git shortlog "$@" | \
-perl -ne 'print if/^\S+/' | \
-perl -pe 's/(.*)\((\d+)\).*/$2: $1/' | \
+perl -ne 's/(.*)\((\d+)\).*/$2: $1/,print if/^\S+/' | \
 sort -gr | \
 less -MSi;
