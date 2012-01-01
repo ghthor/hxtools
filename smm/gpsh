@@ -46,20 +46,24 @@ sub main
 	if ($opt_listonly) {
 		$opt_verbose = 1;
 	}
-	print "[$$] Main program\n";
 	if (scalar(@ARGV) == 0) {
 		@ARGV = ("");
 	}
 
-	if ($rebuild_index || !-e $opt_idxfile) {
+	if ($rebuild_index) {
+		($index, $vbr_map) = &index_rebuild($opt_idxfile);
+	} elsif (!-e $opt_idxfile) {
+		print STDERR "[$$] No index file found at current level\n";
 		($index, $vbr_map) = &index_rebuild($opt_idxfile);
 	} elsif (-M $opt_idxfile > 1 && $opt_listonly) {
+		print STDERR "[$$] Index file older than a day\n";
 		($index, $vbr_map) = &index_rebuild($opt_idxfile);
 	} elsif (-M $opt_idxfile > 1) {
 		($index, $vbr_map) = &index_read($opt_idxfile);
 		$queue = &queue_select($index, \@ARGV);
 		# Avoid backgrounding if we have nothing to play
 		if (scalar(@$queue) > 0) {
+			print STDERR "[$$] Index file older than a day\n";
 			&schedule(\&index_rebuild, $opt_idxfile);
 		} else {
 			($index, $vbr_map) = &index_rebuild($opt_idxfile);
