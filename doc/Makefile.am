@@ -37,6 +37,7 @@ dist_man_MANS = \
 	png2wx.1 \
 	qplay.1 \
 	parkverbot.8 \
+	printcaps.8 \
 	psthreads.1 \
 	recursive_lower.1 \
 	sourcefuncsize.1 \
