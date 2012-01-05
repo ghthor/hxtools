@@ -10,6 +10,26 @@
 #include <string.h>
 #include <time.h>
 #include <libHX/defs.h>
+#ifdef __linux__
+#	ifndef CLOCK_MONOTONIC_RAW
+#		define CLOCK_MONOTONIC_RAW 4
+#	endif
+#	ifdef CLOCK_REALTIME_COARSE
+#		define CLOCK_REALTIME_COARSE 5
+#	endif
+#	ifdef CLOCK_MONOTONIC_COARSE
+#		define CLOCK_MONOTONIC_COARSE 6
+#	endif
+#	ifdef CLOCK_BOOTTIME
+#		define CLOCK_BOOTTIME 7
+#	endif
+#	ifdef CLOCK_REALTIME_ALARM
+#		define CLOCK_REALTIME_ALARM 8
+#	endif
+#	ifndef CLOCK_BOOTTIME_ALARM
+#		define CLOCK_BOOTTIME_ALARM 9
+#	endif
+#endif
 
 #define E(s) {s, #s}
 
@@ -29,6 +49,24 @@ static const struct clock_desc {
 #endif
 #ifdef CLOCK_THREAD_CPUTIME_ID
 	E(CLOCK_THREAD_CPUTIME_ID),
+#endif
+#ifdef CLOCK_MONOTONIC_RAW
+	E(CLOCK_MONOTONIC_RAW),
+#endif
+#ifdef CLOCK_REALTIME_COARSE
+	E(CLOCK_REALTIME_COARSE),
+#endif
+#ifdef CLOCK_MONOTONIC_COARSE
+	E(CLOCK_MONOTONIC_COARSE),
+#endif
+#ifdef CLOCK_BOOTTIME
+	E(CLOCK_BOOTTIME),
+#endif
+#ifdef CLOCK_REALTIME_ALARM
+	E(CLOCK_REALTIME_ALARM),
+#endif
+#ifdef CLOCK_BOOTTIME_ALARM
+	E(CLOCK_BOOTTIME_ALARM),
 #endif
 };
 
