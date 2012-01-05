@@ -173,6 +173,10 @@ static bool pv_get_options(int *argc, const char ***argv)
 	}
 	for (arg = &(*argv)[1]; *arg != NULL; ++arg)
 		pv_open_device(*arg);
+	if (HXlist_empty(&pv_bdev_list)) {
+		fprintf(stderr, "ERROR: No devices configured, exiting.\n");
+		return false;
+	}
 	return true;
 }
 
