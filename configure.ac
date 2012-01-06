@@ -19,6 +19,10 @@ kbddir='${pkgdatadir}/kbd';
 keymapdir='${kbddir}';
 vgafontdir='${kbddir}';
 x11fontdir='${kbddir}';
+AC_ARG_WITH([slibdir], AS_HELP_STRING([--with-slibdir=PATH],
+	[Path to the super lib directory [[/lib]]]),
+	[slibdir="$withval"], [slibdir="/lib"])
+AC_SUBST([slibdir])
 AC_ARG_WITH([keymapdir], AS_HELP_STRING([--with-keymapdir=PATH],
 	[Path to the keymap directory.
 	Most likely /usr/share/kbd/keymaps.]),
