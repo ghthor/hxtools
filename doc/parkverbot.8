@@ -6,20 +6,23 @@ parkverbot \(em daemon to inhibit hard disk head parking
 \fIdevice\fP...
 .SH Introduction
 .PP
-Dear Manufacturers of spinning magnetic hard disks! The periodic automatic head
-unloading, measurable by the S.M.A.R.T. attribute no. 225 "Load_Cycle_Count",
-is a real bother: latency on wake-up, and it cannot be turned off reliably.
-hdparm -B is most of the time ineffective, not to mention that hdparm does not
-work with SCSI/SAS disks, and using a DOS utility disk just is not realistic.
-It is believed that the head unloading leads to a shorter lifetime, and while
-you may refute that, it is not hard to believe that you want us to buy new
-disks sooner than later. In short, you suck. And while you do, this little
-utility tries to counter-effect this.
+Modern rotational hard disks have a misfeature involving the regular automatic
+unloading of the heads, measurable by the S.M.A.R.T. attribute no. 225
+"Load_Cycle_Count", that causes latency on wake-up, and while the manufacturers
+sell this as "green"/ecophil, it is believed to cause reduced hard disk life.
+.PP
+It is also not reliably deactivatable. hdparm -B is most of the time
+ineffective, not to mention that hdparm does not work with SCSI/SAS disks, and
+using a DOS utility disk just is not realistic. (In short, you suck, dear
+manufacturers.)
 .SH Description
 .PP
-The "parkverbot" daemon will periodically read data from a random location on disk in an
-effort to reset the inactivity timer in the hardware and so prevent the dreaded
-head unloading mis-feature of today's disks.
+The "parkverbot" daemon will issue small read requests periodically to a random
+location on disk in an effort to reset the inactivity timer in the hardware and
+so prevent the dreaded head unloading.
+.PP
+The current algorithms are not fully proof; the statistical success/failure
+rate in a laptop scenario has been observed to be 0.4 unloads/day.
 .PP
 parkverbot obsoletes the earlier "thkd" package.
 .PP
