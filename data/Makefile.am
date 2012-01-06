@@ -9,6 +9,3 @@ dist_data_DATA = \
 	hxtools_dircolors \
 	hxtools_profile.bash \
 	rfc2307bis-utf8.schema
-
-systemddir = ${slibdir}/systemd/system
-dist_systemd_DATA = parkverbot@.service

@@ -12,9 +12,6 @@ dist_bin_SCRIPTS = \
 	pmap_dirty \
 	su1
 
-sbin_PROGRAMS = \
-	parkverbot
-
 pkglibexec_PROGRAMS = \
 	fd0ssh \
 	printcaps \
@@ -39,7 +36,6 @@ dist_noinst_SCRIPTS = \
 clock_info_LDADD       = -lrt
 ofl_LDADD              = ${libHX_LIBS}
 printcaps_LDADD        = ${libHX_LIBS} ${libcap_LIBS}
-parkverbot_LDADD       = ${libHX_LIBS}
 proc_iomem_count_LDADD = ${libHX_LIBS}
 psthreads_LDADD        = ${libHX_LIBS}
 utmp_register_LDADD    = ${libHX_LIBS}
