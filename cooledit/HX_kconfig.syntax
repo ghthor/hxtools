@@ -2,6 +2,14 @@
 
 context default
 
+context linestart menu \n
+	keyword whole linestart menu white
+	keyword "*" green
+	keyword '*' brightgreen
+
+context linestart if \n
+	keyword whole linestart if white
+
 context linestart config \n
 	keyword whole linestart config white
 
@@ -34,6 +42,16 @@ context linestart \s*bool \n
 	keyword whole linestart \s*bool white
 	keyword "*" green
 	keyword '*' brightgreen
+
+context linestart default \n
+	keyword whole linestart default white
+	keyword whole if white
+	keyword ! white
+	keyword || white
+	keyword && white
+	keyword = white
+	keyword ( brightcyan
+	keyword ) brightcyan
 
 context linestart depends \n
 	keyword whole linestart depends\son white
