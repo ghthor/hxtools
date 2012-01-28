@@ -49,6 +49,13 @@ sub main
 	if (scalar(@ARGV) == 0) {
 		@ARGV = ("");
 	}
+	foreach my $arg (@ARGV) {
+		if (substr($arg, 0, 1) ne "-") {
+			next;
+		}
+		print STDERR "\"$arg\" not recognized as option, ",
+			"interpreting it as search keyword instead.\n";
+	}
 
 	if ($rebuild_index) {
 		($index, $vbr_map) = &index_rebuild($opt_idxfile);
