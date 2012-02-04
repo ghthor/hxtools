@@ -8,6 +8,7 @@
 #	as published by the Free Software Foundation; either version 2
 #	of the License, or (at your option) any later version.
 #
+use Filesys::Df;
 use Getopt::Long;
 use POSIX;
 use strict;
@@ -133,22 +134,90 @@ sub do_loc
 	close IN;
 }
 
-sub do_disk
+sub get_mountpoints_lsblk
 {
-	if (!open(IN, "df 2>/dev/null |")) {
-		return;
-	}
+	local *IN = shift @_;
+	my @ret;
 
-	my($disk_total, $disk_used);
-	while (defined(my $l = <IN>)) {
-		chomp $l;
-		if ($l =~ m{^/dev/\S+\s+(\d+)\s+(\d+)}) {
-			$disk_total += $1;
-			$disk_used += $2;
-		}
+	while (defined(my $line = <IN>)) {
+		chomp $line;
+		my($mm, $mt) = ($line =~ m{^\s*(\S+)\s*(.*)});
+		push(@ret, $mt);
 	}
 	close IN;
-	printf " | DiskUse: %u/%uGB", $disk_used / 1048576,
+	return @ret;
+}
+
+sub get_mountpoints_mountinfo
+{
+	local *IN = shift @_;
+	my(%hash, %h2);
+
+	while (defined(my $line = <IN>)) {
+		chomp $line;
+		my(undef, undef, $stdev, undef, $mt, undef, undef, undef, $dev) =
+			split(/\s+/, $line);
+		if (substr($dev, 0, 1) ne "/") {
+			next;
+		}
+		$mt =~ s{\\([0-3][0-7][0-7])}{chr oct $1}eg;
+		$hash{$stdev} = $mt;
+	}
+	@h2{values %hash} = ();
+	return keys %h2;
+}
+
+sub get_mountpoints_mounts
+{
+	local *IN = shift @_;
+	my(%hash, %h2);
+
+	while (defined(my $line = <IN>)) {
+		my($dev, $mt) = split(/\s+/, $line);
+		if (substr($dev, 0, 1) ne "/") {
+			next;
+		}
+		$mt =~ s{\\([0-3][0-7][0-7])}{chr oct $1}eg;
+		$hash{$dev} = $mt;
+	}
+	@h2{values %hash} = ();
+	return keys %h2;
+}
+
+sub get_mountpoints
+{
+	local *IN;
+
+	if (open(IN, "lsblk -no \"MAJ:MIN,MOUNTPOINT\" 2>/dev/null |") &&
+	    $? == 0) {
+		return get_mountpoints_lsblk(\*IN);
+	}
+	close IN;
+	if (open(IN, "< /proc/self/mountinfo")) {
+		return get_mountpoints_mountinfo(\*IN);
+	} elsif (open(IN, "< /proc/mounts")) {
+		return get_mountpoints_mounts(\*IN);
+	}
+}
+
+sub do_disk
+{
+	my($disk_total, $disk_free, $disk_used);
+
+	print "\n";
+	foreach my $mntpt (sort (get_mountpoints())) {
+		if (substr($mntpt, 0, 1) ne "/") {
+			next;
+		}
+		my $r = df($mntpt);
+		if (!defined($r)) {
+			next;
+		}
+		$disk_total += $r->{blocks};
+		$disk_free += $r->{bfree};
+	}
+	$disk_used = $disk_total - $disk_free;
+	printf " | DiskUse: %.0f/%.0fGB", $disk_used / 1048576,
 	       $disk_total / 1048576;
 }
 
