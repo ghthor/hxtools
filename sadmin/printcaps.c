@@ -56,6 +56,12 @@ static const char *const cap_names[] = {
 #ifdef CAP_MAC_ADMIN
 	E(MAC_ADMIN),
 #endif
+#ifdef CAP_SYSLOG
+	E(SYSLOG),
+#endif
+#ifdef CAP_WAKE_ALARM
+	E(WAKE_ALARM),
+#endif
 #undef E
 };
 
