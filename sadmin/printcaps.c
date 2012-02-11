@@ -47,9 +47,15 @@ static const char *const cap_names[] = {
 	E(LEASE),
 	E(AUDIT_WRITE),
 	E(AUDIT_CONTROL),
+#ifdef CAP_SETFCAP
 	E(SETFCAP),
+#endif
+#ifdef CAP_MAC_OVERRIDE
 	E(MAC_OVERRIDE),
+#endif
+#ifdef CAP_MAC_ADMIN
 	E(MAC_ADMIN),
+#endif
 #undef E
 };
 
