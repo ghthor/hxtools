@@ -114,6 +114,7 @@ static int xcp_mmap(const char *input, const char *output)
 		perror("mmap");
 		return EXIT_FAILURE;
 	}
+	madvise(area, isb.st_size, MADV_SEQUENTIAL);
 
 	if (write(ofd, area, isb.st_size) != isb.st_size) {
 		perror("write");
