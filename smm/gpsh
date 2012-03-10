@@ -13,7 +13,7 @@ use strict;
 my @opt_mplayer;
 my $opt_nomixes;
 my $opt_verbose;
-my @meta_exts = qw(.txt .m3u .tls .lyr);
+my @meta_exts = qw(.txt .m3u .tls .lyr .lop);
 
 &main();
 
