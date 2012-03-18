@@ -9,7 +9,6 @@
 #	of the License, or (at your option) any later version.
 #
 use Filesys::Df;
-use Getopt::Long;
 use POSIX;
 use strict;
 
@@ -17,7 +16,6 @@ main();
 
 sub main
 {
-	&Getopt::Long::Configure(qw(bundling));
 	print "(by hxtools sysinfo) ";
 	do_hostname();
 	do_version();
