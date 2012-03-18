@@ -3,8 +3,6 @@
 *.o
 .deps/
 .libs/
-GNUmakefile
-GNUmakefile.in
 Makefile
 Makefile.in
 
