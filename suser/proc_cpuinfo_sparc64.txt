@@ -1,0 +1,14 @@
+cpu             : UltraSparc T1 (Niagara)
+fpu             : UltraSparc T1 integrated FPU
+pmu             : niagara
+prom            : OBP 4.30.4.b 2010/07/09 13:43
+type            : sun4v
+ncpus probed    : 24
+ncpus active    : 24
+D$ parity tl1   : 0
+I$ parity tl1   : 0
+cpucaps         : flush,stbar,swap,muldiv,v9,blkinit,mul32,div32,v8plus,ASIBlkInit
+Cpu23ClkTck     : 000000003b9aca00
+MMU Type        : Hypervisor (sun4v)
+State:
+CPU23:          online
