@@ -74,6 +74,7 @@ static char *__HX_strmtrim(char *i)
 			continue;
 		*out++ = last = *i;
 	}
+	*out++ = '\0';
 	return orig;
 }
 
