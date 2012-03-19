@@ -73,12 +73,12 @@ static const struct clock_desc {
 static const char *ci_resolution(char *buf, size_t size,
     const struct timespec *tp)
 {
-	static const char *unit_names[] = {"ns", "µs", "ms", "s"};
+	static const char unit_names[][3] = {"ns", "µs", "ms", "s "};
 	unsigned int unit_idx = 0;
 	long nsec = tp->tv_nsec;
 
 	if (tp->tv_sec > 0) {
-		snprintf(buf, size, "%llu s",
+		snprintf(buf, size, "%llu ns",
 			tp->tv_sec * 1000000000ULL + nsec);
 		return buf;
 	}
@@ -99,6 +99,7 @@ int main(void)
 	unsigned int i;
 	char buf[32];
 
+	printf("%24s: %20s  %10s\n", "Name", "Current value", "Resolution");
 	for (i = 0; i < ARRAY_SIZE(clocks); ++i) {
 		c = &clocks[i];
 
@@ -108,12 +109,10 @@ int main(void)
 			continue;
 		}
 
-		printf("%s: now %lu.%09lu, resolution %lu.%06lu (%s)\n",
+		printf("%24s: %10lu.%09lu  %10s\n",
 			c->name,
 			static_cast(unsigned long, tp.tv_sec),
 			static_cast(unsigned long, tp.tv_nsec),
-			static_cast(unsigned long, res.tv_sec),
-			static_cast(unsigned long, res.tv_nsec),
 			ci_resolution(buf, sizeof(buf), &res));
 	}
 	return EXIT_SUCCESS;
