@@ -5,6 +5,7 @@
 /parkverbot
 /printcaps
 /proc_iomem_count
+/proc_stat_parse
 /psthreads
 /utmp_register
 /xfs_irecover

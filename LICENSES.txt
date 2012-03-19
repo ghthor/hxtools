@@ -9,6 +9,7 @@ sadmin/parkverbot		GPL-2.0+
 sadmin/pmap_dirty		PD
 sadmin/printcaps		PD
 sadmin/proc_iomem_count		PD
+sadmin/proc_stat_parse		PD
 sadmin/psthreads		GPL-2.0+
 sadmin/raregetty		PD
 sadmin/recursive_lower		PD
