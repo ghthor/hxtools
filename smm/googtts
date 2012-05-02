@@ -86,10 +86,24 @@ sub main
 		$text = join(" ", @ARGV);
 	}
 	if (length($text) > 100) {
-		print "Note that the number of input length is capped at 100, and may be rejected if input is longer.\n";
+		print "Note that the number of input length per inquiry is capped at 100, so I will attempt splitting it.\n";
 	}
 
+	my $x = &submit($lang, $text);
+	if (-t 1) {
+		open(FH, "|mpg123 -v -");
+		print FH $x;
+		close FH;
+	} else {
+		print $x;
+	}
+}
+
+sub submit
+{
+	my($lang, $text) = @_;
 	my $uri = URI->new();
+
 	$uri->scheme("http");
 	$uri->host("translate.google.com");
 	$uri->path("/translate_tts");
@@ -103,11 +117,5 @@ sub main
 		print $res->status_line();
 		exit(1);
 	}
-	if (-t 1) {
-		open(FH, "|mpg123 -v -");
-		print FH $res->decoded_content();
-		close FH;
-	} else {
-		print $res->decoded_content();
-	}
+	return $res->decoded_content();
 }
