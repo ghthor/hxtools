@@ -85,17 +85,36 @@ sub main
 	} else {
 		$text = join(" ", @ARGV);
 	}
-	if (length($text) > 100) {
-		print "Note that the number of input length per inquiry is capped at 100, so I will attempt splitting it.\n";
-	}
 
-	my $x = &submit($lang, $text);
 	if (-t 1) {
-		open(FH, "|mpg123 -v -");
-		print FH $x;
-		close FH;
-	} else {
-		print $x;
+		open(STDOUT, "|mpg123 -v -");
+	}
+	&sequence($lang, $text);
+	close STDOUT;
+}
+
+sub sequence
+{
+	my $lang = shift @_;
+	my @words = split(m{\s+}s, shift @_);
+	my $req;
+
+	while (scalar(@words) > 0) {
+		if (length($req) + 1 + length($words[0]) <= 100) {
+			$req .= " ";
+			$req .= shift @words;
+			next;
+		}
+		if (length($req) == 0) {
+			print STDERR "There is a really long word. Audio may be interrupted in an odd spot due to this.\n";
+			$req .= substr($words[0], 0, 100);
+			$words[0] = substr($words[0], 100);
+		}
+		print &submit($lang, $req);
+		$req = undef;
+	}
+	if (length($req) > 0) {
+		print &submit($lang, $req);
 	}
 }
 
