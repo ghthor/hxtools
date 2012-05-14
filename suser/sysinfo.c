@@ -238,24 +238,27 @@ static void sy_disk(struct sy_block *sib)
 		goto out;
 	while (mnt_table_next_fs(table, iter, &fs) == 0) {
 		const char *source = mnt_fs_get_source(fs);
+		const char *mntpt  = mnt_fs_get_target(fs);
 
 		if (source == NULL || *source != '/')
 			continue;
 		if (HXmap_add(seen, reinterpret_cast(const void *,
-		    static_cast(uintptr_t, mnt_fs_get_id(fs))), source) < 0)
+		    static_cast(uintptr_t, mnt_fs_get_devno(fs))), mntpt) < 0)
 			goto out;
 	}
 	mnt_reset_iter(iter, MNT_ITER_FORWARD);
 	while (mnt_table_next_fs(table, iter, &fs) == 0) {
-		const char *mntpt;
+		const char *mntpt, *saved_mntpt;
 		struct statvfs sb;
 
-		if (HXmap_find(seen, reinterpret_cast(const void *,
-		    static_cast(uintptr_t, mnt_fs_get_id(fs)))) <= 0)
-			continue;
-
 		mntpt = mnt_fs_get_target(fs);
+		saved_mntpt = HXmap_get(seen, reinterpret_cast(const void *,
+			static_cast(uintptr_t, mnt_fs_get_devno(fs))));
+
 		if (mntpt == NULL || *mntpt != '/')
+			continue;
+		if (saved_mntpt == NULL ||
+		    strcmp(mntpt, saved_mntpt) != 0)
 			continue;
 		if (statvfs(mntpt, &sb) < 0)
 			continue;
