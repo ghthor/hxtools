@@ -3,11 +3,12 @@
  *	Check if a word is symmetric (oh, you call that palindrome...)
  *	x86 assembler demonstration program
  *
- *	written by Jan Engelhardt <jengelh [at] medozas de>, 2003 - 2007
- *	http://jengelh.medozas.de/
- *	released in the Public Domain
+ *	written by Jan Engelhardt, 2003-2007
+ *
+ *	This program is free software; you can redistribute it and/or
+ *	modify it under the terms of the WTF Public License version 2 or
+ *	(at your option) any later version.
  */
-
 .intel_syntax noprefix;
 .section .rodata;
 .L_LC0:

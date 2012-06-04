@@ -1,9 +1,11 @@
 #!/usr/bin/perl
 #
 #	man2html (yet another one)
-#	written by Jan Engelhardt <jengelh [at] medozas de>
-#	http://jengelh.medozas.de/
-#	released in the Public Domain
+#	written by Jan Engelhardt, 2011
+#
+#	This program is free software; you can redistribute it and/or
+#	modify it under the terms of the WTF Public License version 2 or
+#	(at your option) any later version.
 #
 #	Most of the man2html converters on the net are either totally
 #	outdated or more complex than I needed.

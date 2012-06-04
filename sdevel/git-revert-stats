@@ -1,8 +1,11 @@
 #!/usr/bin/perl
 #
 #	git-revert statistics
-#	Author: Jan Engelhardt, 2008
-#	released into the Public Domain
+#	written by Jan Engelhardt, 2008
+#
+#	This program is free software; you can redistribute it and/or
+#	modify it under the terms of the WTF Public License version 2 or
+#	(at your option) any later version.
 #
 #	git log --pretty="format:<%an>%s" v2.6.25..HEAD | ./git-revert-stats
 #
@@ -10,6 +13,7 @@
 #	-o        omit developers with only one revert/commit
 #	-v        debug debug debug output
 #
+
 use Getopt::Long;
 use Git;
 use strict;

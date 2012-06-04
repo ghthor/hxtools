@@ -1,7 +1,11 @@
 #!/bin/bash
-# written up by Jan Engelhardt, 2008
-# Public Domain
-
+#
+#	written up by Jan Engelhardt, 2008
+#
+#	This program is free software; you can redistribute it and/or
+#	modify it under the terms of the WTF Public License version 2 or
+#	(at your option) any later version.
+#
 git shortlog "$@" | \
 perl -ne 's/(.*)\((\d+)\).*/$2: $1/,print if/^\S+/' | \
 sort -gr | \

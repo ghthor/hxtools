@@ -1,7 +1,10 @@
 /*
  *	Print current process capabilities in human-readable fashion
- *	Author: Jan Engelhardt, 2011
- *	released into the Public Domain
+ *	written by Jan Engelhardt, 2011
+ *
+ *	This program is free software; you can redistribute it and/or
+ *	modify it under the terms of the WTF Public License version 2 or
+ *	(at your option) any later version.
  */
 #include <sys/types.h>
 #include <errno.h>

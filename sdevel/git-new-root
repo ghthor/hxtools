@@ -1,6 +1,11 @@
 #!/bin/bash
-# written up by Jan Engelhardt, 2008
-# Public Domain
+#
+#	Start a new root commit (without a parent)
+#	written up by Jan Engelhardt, 2008
+#
+#	This program is free software; you can redistribute it and/or
+#	modify it under the terms of the WTF Public License version 2 or
+#	(at your option) any later version.
 
 if [[ -z "$1" ]]; then
 	echo "Need a branch name";

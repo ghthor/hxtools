@@ -1,11 +1,13 @@
 /*
  *	Show processes using directories/files/mountpoints
+ *	Copyright © Jan Engelhardt, 2008-2010
+ *
+ *	This program is free software; you can redistribute it and/or
+ *	modify it under the terms of the WTF Public License version 2 or
+ *	(at your option) any later version.
  *
  *	(While it says mountpoint in the source, any directory is acceptable,
  *	as are files.)
- *
- *	written by Jan Engelhardt, 2008 - 2010
- *	Released in the Public Domain.
  */
 #include <sys/stat.h>
 #include <sys/types.h>

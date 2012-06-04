@@ -2,8 +2,12 @@
 #
 #	Hook up with the Google TTS
 #	written by Jan Engelhardt, 2011
-#	put into the Public Domain
 #
+#	This program is free software; you can redistribute it and/or
+#	modify it under the terms of the WTF Public License version 2 or
+#	(at your option) any later version.
+#
+
 use LWP::UserAgent;
 use URI;
 use utf8;

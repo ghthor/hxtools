@@ -1,7 +1,10 @@
 /*
  *	system clock info
  *	written by Jan Engelhardt, 2011
- *	placed into the Public Domain
+ *
+ *	This program is free software; you can redistribute it and/or
+ *	modify it under the terms of the WTF Public License version 2 or
+ *	(at your option) any later version.
  */
 #define _FILE_OFFSET_BITS 64
 #include <errno.h>

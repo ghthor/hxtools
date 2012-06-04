@@ -1,8 +1,13 @@
 #!/usr/bin/perl
 #
 #	quicker tar + better defaults
-#	Author: Jan Engelhardt, 2007-2010, placed into the Public Domain
-#	Achieve higher compression by using dedicated file sorting
+#	written by Jan Engelhardt, 2007-2010
+#
+#	This program is free software; you can redistribute it and/or
+#	modify it under the terms of the WTF Public License version 2 or
+#	(at your option) any later version.
+#
+#	Achieves higher compression by using dedicated file sorting
 #	to put similar blocks next to each other.
 #
 

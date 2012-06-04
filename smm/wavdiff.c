@@ -1,9 +1,11 @@
 /*
  *	deltify wavs
  *	used to compare artifacts of audio codecs
- *	written by Jan Engelhardt <jengelh [at] medozas de>, 2008 - 2010
- *	http://jengelh.medozas.de/
- *	released in the Public Domain
+ *	written by Jan Engelhardt, 2008-2010
+ *
+ *	This program is free software; you can redistribute it and/or
+ *	modify it under the terms of the WTF Public License version 2 or
+ *	(at your option) any later version.
  */
 #include <sys/mman.h>
 #include <sys/stat.h>

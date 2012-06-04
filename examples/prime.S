@@ -3,9 +3,11 @@
  *	x86 assembler demonstration program
  *	use with GNU AS
  *
- *	written by Jan Engelhardt <jengelh [at] medozas de>, 2003 - 2006
- *	http://jengelh.medozas.de/
- *	released in the Public Domain
+ *	written by Jan Engelhardt, 2003-2006
+ *
+ *	This program is free software; you can redistribute it and/or
+ *	modify it under the terms of the WTF Public License version 2 or
+ *	(at your option) any later version.
  */
 .intel_syntax noprefix;
 .section .rodata;

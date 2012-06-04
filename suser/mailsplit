@@ -1,5 +1,11 @@
 #!/usr/bin/perl
-# Author: Jan Engelhardt, 2007-2008, placed into the Public Domain
+#
+#	written by Jan Engelhardt, 2007-2008
+#
+#	This program is free software; you can redistribute it and/or
+#	modify it under the terms of the WTF Public License version 2 or
+#	(at your option) any later version.
+#
 
 use Getopt::Long;
 use strict;

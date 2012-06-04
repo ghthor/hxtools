@@ -1,8 +1,10 @@
 /*
  *	declone.c - unlink but preserve a file
- *	written by Jan Engelhardt <jengelh [at] medozas de>, 2004 - 2007
- *	http://jengelh.medozas.de/
- *	released in the Public Domain
+ *	written by Jan Engelhardt, 2004-2007
+ *
+ *	This program is free software; you can redistribute it and/or
+ *	modify it under the terms of the WTF Public License version 2 or
+ *	(at your option) any later version.
  */
 #include <sys/stat.h>
 #include <sys/types.h>

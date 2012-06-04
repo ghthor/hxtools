@@ -1,9 +1,11 @@
 #!/usr/bin/perl -w
 #
 #	pmap_dirty
-#	written by Jan Engelhardt <jengelh [at] medozas de>, 2006 - 2007
-#	http://jengelh.medozas.de/
-#	released in the Public Domain
+#	written by Jan Engelhardt, 2006-2007
+#
+#	This program is free software; you can redistribute it and/or
+#	modify it under the terms of the WTF Public License version 2 or
+#	(at your option) any later version.
 #
 # Usage: pmap_dirty [pid...]
 #
@@ -11,6 +13,7 @@
 #	 pmap_dirty $$
 #	 pmap_dirty `pidof init` `pidof java`
 #
+
 use Getopt::Long;
 use strict;
 
