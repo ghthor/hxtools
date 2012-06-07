@@ -46,13 +46,13 @@ smm/gpsh			WTFPL-2.0+
 smm/mod2ogg			WTFPL-2.0+
 smm/mpg2ogg			WTFPL-2.0+
 smm/oplay			GPL-2.0+
+smm/pcmdiff			WTFPL-2.0+
 smm/png2wx.pl			WTFPL-2.0+
 smm/png2wx.py			WTFPL-2.0+
 smm/qplay			GPL-2.0+
 smm/ssa2srt			WTFPL-2.0+
 smm/stxdb			GPL-2.0+
 smm/vfontas			GPL-2.0+
-smm/wavdiff			WTFPL-2.0+
 suser/declone			WTFPL-2.0+
 suser/fduphl			WTFPL-2.0+
 suser/fxterm			WTFPL-2.0+

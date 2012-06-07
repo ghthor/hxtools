@@ -12,9 +12,9 @@ dist_bin_SCRIPTS = \
 
 pkglibexec_PROGRAMS = \
 	bsvplay \
+	pcmdiff \
 	qplay \
-	vfontas \
-	wavdiff
+	vfontas
 
 dist_pkglibexec_SCRIPTS  = \
 	extract_d3pkg \
@@ -32,9 +32,9 @@ dist_pkglibexec_SCRIPTS  = \
 bsvplay_SOURCES = bsvplay.c pcspkr_pcm.c
 bsvplay_LDADD   = ${libHX_LIBS} -lm
 oplay_LDADD     = ${libHX_LIBS}
+pcmdiff_LDADD   = ${libHX_LIBS}
 qplay_SOURCES   = qplay.c pcspkr_pcm.c
 qplay_LDADD     = ${libHX_LIBS} -lm
-wavdiff_LDADD   = ${libHX_LIBS}
 vfontas_LDADD   = ${libHX_LIBS}
 
 EXTRA_DIST = pcspkr.h

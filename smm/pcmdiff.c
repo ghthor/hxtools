@@ -1,5 +1,5 @@
 /*
- *	deltify wavs
+ *	Deltify two PCM streams
  *	used to compare artifacts of audio codecs
  *	written by Jan Engelhardt, 2008-2010
  *
@@ -38,7 +38,7 @@ static unsigned long max = 0;
 static unsigned int mono_mix;
 static double volume = 1.0;
 
-static bool wavdiff_get_options(int *argc, const char ***argv)
+static bool pcmdiff_get_options(int *argc, const char ***argv)
 {
 	struct HXoption options_table[] = {
 		{.sh = 'a', .type = HXTYPE_ULONG, .ptr = &gfile[0].offset,
@@ -65,7 +65,7 @@ static bool wavdiff_get_options(int *argc, const char ***argv)
 	return true;
 }
 
-static bool wavdiff_open_streams(int argc, const char **argv,
+static bool pcmdiff_open_streams(int argc, const char **argv,
     struct fdstream *file)
 {
 	if ((file[0].fd = open(argv[1], O_RDONLY)) < 0) {
@@ -110,7 +110,7 @@ static inline int16_t clamp16(int32_t x)
 	return x;
 }
 
-static void wavdiff_matrix_process(struct fdstream *file)
+static void pcmdiff_matrix_process(struct fdstream *file)
 {
 	unsigned long stream_max = file[0].sb.st_size - file[0].offset;
 	unsigned long stream_count = 0;
@@ -156,7 +156,7 @@ static void wavdiff_matrix_process(struct fdstream *file)
 	free(stream_buf);
 }
 
-static void wavdiff_normal_process(struct fdstream *file)
+static void pcmdiff_normal_process(struct fdstream *file)
 {
 	int16_t a_sample, b_sample;
 	bool a_stop = false, b_stop = false;
@@ -183,7 +183,7 @@ static void wavdiff_normal_process(struct fdstream *file)
 
 static int main2(int argc, const char **argv)
 {
-	if (!wavdiff_get_options(&argc, &argv))
+	if (!pcmdiff_get_options(&argc, &argv))
 		return EXIT_FAILURE;
 
 	if (argc != 3 && argc != 4) {
@@ -191,10 +191,10 @@ static int main2(int argc, const char **argv)
 		return EXIT_FAILURE;
 	}
 
-	if (!wavdiff_open_streams(argc, argv, gfile))
+	if (!pcmdiff_open_streams(argc, argv, gfile))
 		return EXIT_FAILURE;
-	wavdiff_matrix_process(gfile);
-//	wavdiff_normal_process(gfile);
+	pcmdiff_matrix_process(gfile);
+//	pcmdiff_normal_process(gfile);
 	munmap(gfile[0].area, gfile[0].sb.st_size);
 	munmap(gfile[1].area, gfile[1].sb.st_size);
 	close(gfile[0].fd);

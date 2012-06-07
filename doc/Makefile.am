@@ -36,6 +36,7 @@ dist_man_MANS = \
 	pesubst.1 \
 	png2wx.1 \
 	qplay.1 \
+	pcmdiff.1 \
 	printcaps.8 \
 	psthreads.1 \
 	recursive_lower.1 \
@@ -48,7 +49,6 @@ dist_man_MANS = \
 	utmp_register.8 \
 	vcsaview.8 \
 	vfontas.1 \
-	wavdiff.1 \
 	wktimer.1 \
 	xcp.1 \
 	xfs_irecover.8
