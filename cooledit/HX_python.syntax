@@ -78,7 +78,7 @@ context """ """ green
 	keyword \\\\ brightgreen
 	keyword \\' brightgreen
 	keyword \\\{abtnvfr\} brightgreen
-   
+
 context # \n yellow
 	spellcheck
 

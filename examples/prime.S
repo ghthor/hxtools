@@ -83,12 +83,12 @@ GetPrime:
  * sqrt(N) rather than N/2. This is possible since if you split the number in
  * two integral factors, the maximum value of either (see them independently)
  * can be sqrt(N):
- * 
+ *
  * Imagine we take 100 as the number to check:
  *        100 = x * y      |T	    y strives to 0, while y >= x
  *    =>  100 = x ** 2     |sqrt()
  *   <=>    x = 10
- * 
+ *
  * Checking a prime near 2^31 thus only takes about 3 secs instead on a modest
  * CPU. (15+ secs for IsPrime2 on *that* modest CPU.)
  */

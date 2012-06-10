@@ -155,7 +155,7 @@ int main(int argc, const char **argv)
 		}
 		sp_interp_file(fp);
 		fclose(fp);
-	}		
+	}
 	HX_exit();
 	return EXIT_SUCCESS;
 }

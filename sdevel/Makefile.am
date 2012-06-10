@@ -8,7 +8,7 @@ dist_bin_SCRIPTS = \
 	git-forest \
 	git-track \
 	man2html \
-	spec-beautifier 
+	spec-beautifier
 
 pkglibexec_PROGRAMS = \
 	cctypeinfo

@@ -371,7 +371,7 @@ static void init_maps(void)
 		exit(EXIT_FAILURE);
 	}
 	for (n = 0; n < MAX_OCTAVES * 12; ++n)
-		notemap[n] = 440 * pow(2, (double)(n - 33) / 12); 
+		notemap[n] = 440 * pow(2, (double)(n - 33) / 12);
 
 	ADD("c-", -1);
 	ADD("c", 0);

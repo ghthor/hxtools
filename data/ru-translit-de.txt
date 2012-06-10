@@ -24,8 +24,8 @@ ICON = /usr/share/scim/icons/Yawerty.png
 ### The default name of this table
 NAME = ru-translit-de
 
-### The local names of this table 
-###NAME.ru_RU = 
+### The local names of this table
+###NAME.ru_RU =
 
 ### Supported languages of this table
 LANGUAGES = ru_RU

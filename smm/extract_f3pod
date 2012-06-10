@@ -58,7 +58,7 @@ sub main ()
 
 		my $abs_file = "$ex_out_dir/$nam";
 		&mkdir_p_stripbase($abs_file);
-		open(OUT, "> $abs_file") || 
+		open(OUT, "> $abs_file") ||
 			warn "Could not write to $abs_file: $!\n";
 		binmode OUT;
 		seek(IN, $ofs, 0);

@@ -51,7 +51,7 @@ hxpref_beautify_path()
 {
 	# Show at most the last two path components, if the whole depth of a
 	# normalized $PATH is more than 3 levels, e.g.
-	
+
 	#
 	#   PATH                                    (NORMALIZED DEPTH LEVEL)
 	#

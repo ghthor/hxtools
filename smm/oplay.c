@@ -50,7 +50,7 @@ static struct {
 	.smpsize   = 16,
 	.timelimit = 0,
 	/*
-	 * verbosity levels: 
+	 * verbosity levels:
 	 * 0 nothing
 	 * 1 filename
 	 * 2 filename and dots

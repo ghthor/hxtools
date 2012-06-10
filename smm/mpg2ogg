@@ -45,7 +45,7 @@ sub asgn ()
 foreach my $file (@ARGV) {
 	my $cmd;
 	my %res;
-	
+
 	if ($wav) {
 		$cmd = "oggenc -q4 \"$file\"";
 	} else {
