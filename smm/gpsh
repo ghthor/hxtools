@@ -289,8 +289,8 @@ sub index_rebuild
 		if (&filename_meta($ext)) {
 			next;
 		}
-		push(@$track_list, {title => &filename_nonext($file),
-		     file => $file, ofs => 0});
+		push(@$track_list, {"title" => scalar(&filename_nonext($file)),
+		     "file" => $file, "ofs" => 0});
 	}
 
 	foreach my $file (grep(/\.tls$/, @audio)) {
@@ -319,9 +319,9 @@ sub index_rebuild
 			}
 			$s = $h * 3600 + $m * 60 + $s;
 			my $entry = {
-				title => "$bf,$title",
-				file => $af,
-				ofs => $s,
+				"title" => "$bf,$title",
+				"file" => $af,
+				"ofs" => $s,
 			};
 			push(@$track_list, $entry);
 		}
