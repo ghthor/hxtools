@@ -126,7 +126,8 @@ sub queue_select
 
 sub filename_nonext
 {
-	return (shift(@_) =~ /^(.*)\.[^\.]+$/)[0];
+	my $ext = ($_[0] =~ /^(.*)\.[^\.]+$/)[0];
+	return defined($ext) ? $ext : $_[0];
 }
 
 sub filename_ext
