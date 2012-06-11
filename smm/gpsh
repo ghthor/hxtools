@@ -28,7 +28,6 @@ sub main
 	my $opt_listonly;
 	my $rebuild_index;
 	my $index;
-	my $vbr_map;
 	my $queue;
 
 	$SIG{INT} = $SIG{QUIT} = sub { exit(0); };
@@ -62,26 +61,26 @@ sub main
 	}
 
 	if ($rebuild_index) {
-		($index, $vbr_map) = &index_rebuild($opt_idxfile);
+		$index = &index_rebuild($opt_idxfile);
 	} elsif (!-e $opt_idxfile) {
 		print STDERR "[$$] No index file found at current level\n";
-		($index, $vbr_map) = &index_rebuild($opt_idxfile);
+		$index = &index_rebuild($opt_idxfile);
 	} elsif (-M $opt_idxfile > 1 && $opt_listonly) {
 		print STDERR "[$$] Index file older than a day\n";
-		($index, $vbr_map) = &index_rebuild($opt_idxfile);
+		$index = &index_rebuild($opt_idxfile);
 	} elsif (-M $opt_idxfile > 1) {
-		($index, $vbr_map) = &index_read($opt_idxfile);
+		$index = &index_read($opt_idxfile);
 		$queue = &queue_select($index, \@ARGV);
 		# Avoid backgrounding if we have nothing to play
 		if (scalar(@$queue) > 0) {
 			print STDERR "[$$] Index file older than a day\n";
 			&schedule(\&index_rebuild, $opt_idxfile);
 		} else {
-			($index, $vbr_map) = &index_rebuild($opt_idxfile);
+			$index = &index_rebuild($opt_idxfile);
 			$queue = &queue_select($index, \@ARGV);
 		}
 	} else {
-		($index, $vbr_map) = &index_read($opt_idxfile);
+		$index = &index_read($opt_idxfile);
 	}
 
 	if (!defined($queue)) {
@@ -90,11 +89,11 @@ sub main
 	if ($opt_listonly) {
 		return;
 	}
-	@$queue = sort { $a->{title} cmp $b->{title} } @$queue;
+	@$queue = sort { $a cmp $b } @$queue;
 	if ($opt_shuffle) {
 		@$queue = sort s_random @$queue;
 	}
-	&queue_play($queue, $vbr_map);
+	&queue_play($index, $queue);
 }
 
 sub basename
@@ -109,18 +108,19 @@ sub queue_select
 	my($index, $argv) = @_;
 	my $queue = [];
 
-	print "[$$] Index has ", scalar(@$index), " entries\n";
+	print "[$$] Index has ", scalar(keys %$index), " entries\n";
 	foreach my $arg (@$argv) {
 		push(@$queue, grep {
-			$_->{title} =~ /$arg/i &&
-			(!$opt_nomixes || $_->{ofs} == 0)
-		} @$index);
+			$_ =~ /$arg/i &&
+			(!$opt_nomixes || !exists($index->{$_}->{"ofs"}))
+		} keys %$index);
 	}
 	if ($opt_verbose) {
 		foreach (@$queue) {
-			print "[$$]   \\_ $_->{title}\n";
+			print "[$$]   \\_ $_\n";
 		}
 	}
+	print "[$$] Queue has ", scalar(keys @$queue), " entries\n";
 	return $queue;
 }
 
@@ -162,15 +162,25 @@ sub filename_timidity
 
 sub queue_play
 {
+	my $index = shift @_;
 	my $queue = shift @_;
-	my $vbr_map = shift @_;
 
-	foreach my $entry (@$queue) {
+	foreach my $title (@$queue) {
+		my $entry = $index->{$title};
+		my $ofs = 0;
+
+		if (exists $entry->{ofs}) {
+			$ofs = $entry->{ofs};
+		}
+		if (exists $entry->{parent}) {
+			$entry = $entry->{parent};
+		}
+
 		my $file = $entry->{file};
 		my $ext = &filename_ext($file);
 		$ext = lc $ext;
 
-		print STDERR "\e[1;31m", $entry->{title}, "\e[0m\n"; # ]]
+		print STDERR "\e[1;31m$title\e[0m\n"; # ]]
 		if (&filename_timidity($ext)) {
 			# my $t = $opt_verbose ? "t" : "";
 			system "timidity", "-Os", "-idt", $file;
@@ -179,17 +189,17 @@ sub queue_play
 			&play_umx($file);
 			next;
 		}
-		if (exists $vbr_map->{$file}) {
+		if (exists $entry->{vbr}) {
 			if ($opt_nomixes) {
 				print STDERR "\e[31m(VBR file and reindexing disabled)\e[0m\n";
 			} else {
 				$file = &workaround_mp3vbr($file);
 			}
 		}
-		if ($entry->{ofs} > 0) {
-			--$entry->{ofs};
+		if ($ofs > 0) {
+			--$ofs;
 		}
-		system "mplayer", "-vo", "null", $file, "-ss", $entry->{ofs}, @opt_mplayer;
+		system "mplayer", "-vo", "null", $file, "-ss", $ofs, @opt_mplayer;
 	}
 }
 
@@ -279,8 +289,7 @@ sub index_rebuild
 	my $idxfile = shift @_;
 	local(*DB, *FH);
 	my @audio;
-	my $track_list = [];
-	my $vbr_map = {};
+	my $track_list = {};
 
 	print "[$$] Rebuilding index\n";
 	@audio = File::Find::Rule->not_symlink()->file()->in(".");
@@ -290,8 +299,8 @@ sub index_rebuild
 		if (&filename_meta($ext)) {
 			next;
 		}
-		push(@$track_list, {"title" => scalar(&filename_nonext($file)),
-		     "file" => $file, "ofs" => 0});
+		my $title = &filename_nonext($file);
+		$track_list->{$title} = {"file" => $file};
 	}
 
 	foreach my $file (grep(/\.tls$/, @audio)) {
@@ -300,17 +309,20 @@ sub index_rebuild
 			print "[$$]  \\__ No audio for $file\n";
 			next;
 		}
+
+		# Mark this title as being a mix and/or part of a mix
+		my $parent_title = &filename_nonext($af);
+		$track_list->{$parent_title}->{"ofs"} = 0;
+
 		if (!open(FH, "< $file")) {
 			next;
 		}
-		my $bf = $af;
-		$bf =~ s{(.*)\..+$}{$1};
 		while (defined(my $line = <FH>)) {
 			chomp $line;
 			if ($line =~ m{^<<VBR>>}) {
 				# vivify hash entry, but don't waste
 				# memory for a value like 1
-				$vbr_map->{$af} = undef;
+				$track_list->{$parent_title}->{"vbr"} = undef;
 				next;
 			}
 			my($h, $m, $s, $title) =
@@ -319,12 +331,10 @@ sub index_rebuild
 				next;
 			}
 			$s = $h * 3600 + $m * 60 + $s;
-			my $entry = {
-				"title" => "$bf,$title",
-				"file" => $af,
+			$track_list->{"$parent_title,$title"} = {
 				"ofs" => $s,
+				"parent" => $track_list->{$parent_title},
 			};
-			push(@$track_list, $entry);
 		}
 		close FH;
 	}
@@ -332,17 +342,18 @@ sub index_rebuild
 	if (!open(DB, "> $idxfile")) {
 		die "[$$] Could not write to $idxfile: $!\n";
 	}
-	my $dd = Data::Dumper->new([$track_list, $vbr_map]);
-	print DB $dd->Dump();
+	$Data::Dumper::Indent = 0;
+	$Data::Dumper::Purity = 1;
+	print DB Dumper($track_list);
 	close DB;
-	return ($track_list, $vbr_map);
+	return $track_list;
 }
 
 sub index_read
 {
 	my $idxfile = shift @_;
 	do $idxfile || die "[$$] Could not read from $idxfile: $!\n";
-	return ($::VAR1, $::VAR2);
+	return $::VAR1;
 }
 
 sub s_random
