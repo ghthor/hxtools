@@ -191,7 +191,7 @@ static void sy_loadavg(struct sy_block *sib)
 
 static void sy_memory(struct sy_block *sib)
 {
-	unsigned long long mem_free = 0, mem_buf = 0, mem_cac = 0;
+	unsigned long long mem_free = 0, mem_buf = 0, mem_cac = 0, mem_shm = 0;
 	FILE *fp = fopen("/proc/meminfo", "r");
 	hxmc_t *line = NULL;
 	char *key, *value;
@@ -211,8 +211,10 @@ static void sy_memory(struct sy_block *sib)
 			mem_buf = strtoull(value, NULL, 0);
 		else if (strcmp(key, "Cached") == 0)
 			mem_cac = strtoull(value, NULL, 0);
+		else if (strcmp(key, "Shmem") == 0)
+			mem_shm = strtoull(value, NULL, 0);
 	}
-	sib->mem_used = sib->mem_total - mem_free - mem_buf - mem_cac;
+	sib->mem_used = sib->mem_total - mem_free - mem_buf - mem_cac + mem_shm;
 	HXmc_free(line);
 	fclose(fp);
 }

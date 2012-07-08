@@ -10,14 +10,21 @@ sysinfo \(em print IRC-style system information banner
 .PP
 Prints out an IRC-style machine info, like:
 .PP
-[yaguchi.medozas.de] Linux 2.6.25.8-jen67-rt | AMD Athlon(tm) XP 2000+ 1666
-MHz | Load: 0.17 Tasks: 232 | MemUse: 238/753MB | DiskUse: 184/227GB | Gfx:
-nVidia Corporation NV11 [GeForce2 MX/MX 400] (rev a1) @ 2944x2208
+[seven] Linux 3.4.4-jng6-default x86_64 | 8-thr Intel(R) Core(TM) i7-2600 CPU
+3401MHz | Load: 0.51 Tasks: 461 | Mem: 2672/32155MB | Disk: 656/2791GB | Gfx:
+Intel Corporation 2nd Generation Core Processor Family Integrated Graphics
+Controller @ 1280x1024
 .PP
-The load number is the EWMA over the last 60 seconds; Memory and disk are:
-used/total; (\fBNOT\fP free/total) The @\fIxres\fPx\fIyres\fP is only available
-if $DISPLAY is set and valid.  \fIxres\fP and \fIyres\fP will be the dimensions
-of the _virtual_ size, not the resolution.
+The load number is the EWMA over the last 60 seconds. The values shown for
+memory and disk are the used amount and the total amount (NOT the free amount
+and the total amount). The used memory value may theoretically exceed that of
+the available memory, which is the case when memory is in general already full
+\fBand\fP tmpfs files have been moved to swap (i.e. you are approaching more
+trouble).
+.PP
+The @\fIxres\fPx\fIyres\fP is only available if $DISPLAY is set and valid.
+\fIxres\fP and \fIyres\fP will be the dimensions of the \fBvirtual\fP size, not
+the resolution of any particular monitor.
 .SH See also
 .PP
 \fBhxtools\fP(7)
