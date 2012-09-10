@@ -16,6 +16,10 @@ hxpref_cd()
 	local d="$1";
 	if [[ -z "$d" ]]; then
 		d="$HOME";
+		if [[ -z "$d" ]]; then
+			command cd;
+			return $?;
+		fi;
 	fi;
 	if [[ "$d" == "-" ]]; then
 		# The path will be pushed again right away
