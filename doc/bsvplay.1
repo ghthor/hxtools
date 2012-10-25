@@ -5,12 +5,12 @@ bsvplay \(em convert BASICA music files to PCM
 .SH Syntax
 .PP
 \fBbsvplay\fP [\fB\-i\fP \fIpart\fP] [\fB\-q\fP \fIpart\fP] [\fB\-r\fP
-\fIrate\fP] [\fIfile\fP...] \fB| oplay \-Ms48000 \-\fP
+\fIrate\fP] [\fIfile\fP...] \fB| aplay \-f dat \-c 1\fP
 .SH Description
 .PP
 bsvplay will convert BASICA binary music files to linear 16-bit raw PCM.
 Normally, you will be wanting to pipe it into a raw PCM player like
-\fBoplay\fP(1) to actually output it to a sound device. Be sure to lower the
+\fBaplay\fP(1) to actually output it to a sound device. Be sure to lower the
 volume beforehand to avoid nasty surprises that come with square waves. By
 default, bsvplay will mix 1:1 square:sine waves to give a medium tone hardness.
 .SH Options
@@ -45,4 +45,4 @@ speaker. The following formula holds:
 .fi
 .SH "See also"
 .PP
-\fBoplay\fP(1), \fBqplay\fP(1), \fBhxtools\fP(7)
+\fBaplay\fP(1), \fBoplay\fP(1), \fBqplay\fP(1), \fBhxtools\fP(7)

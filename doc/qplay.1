@@ -4,13 +4,13 @@
 qplay \(em convert QBASIC play strings to PCM
 .SH Syntax
 .PP
-\fBqplay\fP [\fB\-i\fP \fIpart\fP} [\fB\-q\fP \fIpart\fP] [\fB\-r\fP
-\fIrate\fP] [\fIfile\fP...] \fB| oplay \-Ms48000 \-\fP
+\fBqplay\fP [\fB\-i\fP \fIpart\fP] [\fB\-q\fP \fIpart\fP] [\fB\-r\fP
+\fIrate\fP] [\fIfile\fP...] \fB| aplay \-f dat \-c 1\fP
 .SH Description
 .PP
 qplay will convert QBASIC-style strings for its "PLAY" command to linear
 16-bit raw PCM. Normally, you will be wanting to pipe it into a raw PCM player
-like \fBoplay\fP(1) to actually output it to a soudn device. Be sure to lower
+like \fBaplay\fP(1) to actually output it to a sound device. Be sure to lower
 the volume beforehand to avoid nasty surprises that come with square waves. By
 default, bsvplay will mix 1:1 square:sine waves to give a medium tone hardness.
 .SH Options
@@ -109,10 +109,10 @@ and they must stand on a single line.
 .SH Examples
 .PP
 .nf
-	echo "L16CDEFGAB" | qplay - | oplay -Ms4800 -
+	echo "L16O2CDEFGAB>CDEFGAB>L4C" | qplay - | aplay -fdat -c1
 .fi
 .PP
 will play a tone ladder.
 .SH "See also"
 .PP
-\fBbsvplay\fP(1), \fBoplay\fP(1), \fBhxtools\fP(7)
+\fBaplay\fP(1), \fBbsvplay\fP(1), \fBoplay\fP(1), \fBhxtools\fP(7)
