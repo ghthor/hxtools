@@ -42,6 +42,7 @@ enum {
 	CMD_CREATE,
 	CMD_EXTRACT,
 	CMD_CONVERTCPI,
+	CMD_FNT2PSF2,
 };
 
 struct vg_font {
@@ -82,6 +83,11 @@ struct cpi_screenfont_header {
 	uint8_t height, width, yaspect, xaspect;
 	uint16_t num_chars;
 } __attribute__((packed));
+
+struct psf2_header {
+	uint8_t magic[4];
+	uint32_t version, headersize, flags, length, charsize, height, width;
+};
 
 /* Variables */
 static struct {
@@ -351,9 +357,37 @@ static int vf_create(const char *filename, const char *directory)
 	return EXIT_SUCCESS;
 }
 
+static int vf_convert_fnt2psf2(void)
+{
+	struct psf2_header psf = {
+		.magic      = {0x72, 0xB5, 0x4A, 0x86},
+		.headersize = sizeof(psf),
+		.length     = 256,
+		.charsize   = 32,
+		.width      = 9,
+		.height     = 16,
+	};
+	unsigned int glyph, y;
+	uint8_t b[2];
+
+	write(STDOUT_FILENO, &psf, sizeof(psf));
+	for (glyph = 0; glyph < 256; ++glyph)
+		for (y = 0; y < 16; ++y) {
+			read(STDIN_FILENO, b, 1);
+			if (glyph >= 176 && glyph < 224 && b[0] & 0x01)
+				b[1] = 0x80;
+			else
+				b[1] = 0;
+			write(STDOUT_FILENO, b, sizeof(b));
+		}
+	return 1;
+}
+
 static bool vf_get_options(int *argc, const char ***argv)
 {
 	static const struct HXoption options_table[] = {
+		{.sh = 'G', .type = HXTYPE_VAL, .val = CMD_FNT2PSF2,
+		 .ptr = &Opt.action, .help = "Convert a raw FNT to PSF2"},
 		{.sh = 'D', .type = HXTYPE_STRING, .ptr = &Opt.directory,
 		 .help = "Directory to operate on", .htyp = "DIR"},
 		{.sh = 'E', .type = HXTYPE_VAL, .val = CMD_EMPTY,
@@ -407,6 +441,9 @@ static int main2(int argc, const char **argv)
 			break;
 		case CMD_CONVERTCPI:
 			ret = vf_extract_cpi(Opt.file, Opt.directory);
+			break;
+		case CMD_FNT2PSF2:
+			ret = vf_convert_fnt2psf2();
 			break;
 		case CMD_CREATE:
 			ret = vf_create(Opt.file, Opt.directory);
