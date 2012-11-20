@@ -41,7 +41,8 @@ Do not shuffle the play queue.
 .PP
 gpsh keeps an index cache, and refreshes it in the background when it is older
 than a day. If there is no index yet, playing files will be delayed until it
-exists.
+exists. Directories and files whose name without extension ends in "_noindex"
+will be skipped.
 .SH Tracklists for mixes
 .PP
 gpsh scans all .txt files for the following pattern used to denote a subtrack

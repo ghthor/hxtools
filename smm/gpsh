@@ -296,6 +296,9 @@ sub index_rebuild
 
 	foreach my $file (@audio) {
 		my $ext = &filename_ext($file);
+		if ($file =~ m{_noindex/}) {
+			next;
+		}
 		if (&filename_meta($ext)) {
 			next;
 		}
