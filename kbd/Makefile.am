@@ -5,12 +5,13 @@ x11miscdir   = ${x11fontdir}/misc
 x11misc_DATA = ${x11fonts}
 CLEANFILES   = ${x11fonts}
 
-qwertydir    = ${keymapdir}/i386/qwerty
+qwertydir         = ${kbddatadir}/keymaps/i386/qwerty
 dist_qwerty_DATA  = us_jng.map us_jng_vaiou3.map
 
-qwertzdir    = ${keymapdir}/i386/qwertz
+qwertzdir         = ${kbddatadir}/keymaps/i386/qwertz
 dist_qwertz_DATA  = de_jng.map
 
+vgafontdir        = ${kbddatadir}/consolefonts
 dist_vgafont_DATA = ahnv.fnt ati.fnt gotik-textura.fnt ital.fnt mux.fnt \
                neuropol.fnt nvidia.fnt \
                rhx.fnt tosh.fnt \

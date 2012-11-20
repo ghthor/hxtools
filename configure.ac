@@ -17,25 +17,17 @@ AM_CONDITIONAL([HAVE_LIBCAP], [test -n "$libcap_LIBS"])
 AC_SEARCH_LIBS([dlopen], [dl], [libdl_LIBS="$LIBS"; LIBS=""])
 AC_SUBST([libdl_LIBS])
 
-kbddir='${pkgdatadir}/kbd';
-keymapdir='${kbddir}';
-vgafontdir='${kbddir}';
+kbddatadir='${datadir}/kbd';
 x11fontdir='${kbddir}';
-AC_ARG_WITH([keymapdir], AS_HELP_STRING([--with-keymapdir=PATH],
-	[Path to the keymap directory.
-	Most likely /usr/share/kbd/keymaps.]),
-	[keymapdir="$withval"])
-AC_ARG_WITH([vgafontdir], AS_HELP_STRING([--with-vgafontdir=PATH],
-	[Path to the VGA font directory.
-	Most likely /usr/share/kbd/consolefonts.]),
-	[vgafontdir="$withval"])
+AC_ARG_WITH([kbddatadir], AS_HELP_STRING([--with-kbddatadir=PATH],
+	[Path to the kbd data directory.
+	Most likely /usr/share/kbd.]),
+	[kbddatadir="$withval"])
 AC_ARG_WITH([x11fontdir], AS_HELP_STRING([--with-x11fontdir=PATH],
 	[Path to the X11 font directory.
 	Most likely /usr/share/fonts.]),
 	[x11fontdir="$withval"])
-AC_SUBST([kbddir])
-AC_SUBST([keymapdir])
-AC_SUBST([vgafontdir])
+AC_SUBST([kbddatadir])
 AC_SUBST([x11fontdir])
 
 regular_CPPFLAGS="-D_FILE_OFFSET_BITS=64 -D_REENTRANT"
