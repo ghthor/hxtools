@@ -2,7 +2,7 @@
 
 dist_sysconf_DATA = hxloginpref.conf
 
-dist_data_DATA = \
+dist_pkgdata_DATA = \
 	gitconfig \
 	hxloginpref.conf \
 	hxtools_bashrc.bash \

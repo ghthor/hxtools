@@ -1,4 +1,4 @@
-AC_INIT([hxtools], [20120802])
+AC_INIT([hxtools], [20121121])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([config.h])
 AC_PROG_INSTALL
@@ -18,7 +18,7 @@ AC_SEARCH_LIBS([dlopen], [dl], [libdl_LIBS="$LIBS"; LIBS=""])
 AC_SUBST([libdl_LIBS])
 
 kbddatadir='${datadir}/kbd';
-x11fontdir='${kbddir}';
+x11fontdir='${datadir}/fonts';
 AC_ARG_WITH([kbddatadir], AS_HELP_STRING([--with-kbddatadir=PATH],
 	[Path to the kbd data directory.
 	Most likely /usr/share/kbd.]),
