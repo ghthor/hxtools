@@ -43,6 +43,7 @@ enum {
 	CMD_EXTRACT,
 	CMD_CONVERTCPI,
 	CMD_FNT2PSF2,
+	CMD_FNT2PSF2_40,
 };
 
 struct vg_font {
@@ -383,11 +384,57 @@ static int vf_convert_fnt2psf2(void)
 	return 1;
 }
 
+static int vf_convert_fnt2psf2_40(void)
+{
+	struct psf2_header psf = {
+		.magic      = {0x72, 0xB5, 0x4A, 0x86},
+		.headersize = sizeof(psf),
+		.length     = 256,
+		.charsize   = 32,
+		.width      = 16,
+		.height     = 16,
+	};
+	unsigned int glyph, y;
+	uint8_t b[2];
+
+	write(STDOUT_FILENO, &psf, sizeof(psf));
+	for (glyph = 0; glyph < 256; ++glyph)
+		for (y = 0; y < 16; ++y) {
+			read(STDIN_FILENO, b, 1);
+			b[1] = 0;
+			if (b[0] & 0x01)
+				b[1] |= 0x03;
+			if (b[0] & 0x02)
+				b[1] |= 0x0C;
+			if (b[0] & 0x04)
+				b[1] |= 0x30;
+			if (b[0] & 0x08)
+				b[1] |= 0xC0;
+			b[0] &= ~0x03;
+			if (b[0] & 0x10)
+				b[0] |= 0x03;
+			b[0] &= ~0x0C;
+			if (b[0] & 0x20)
+				b[0] |= 0x0C;
+			b[0] &= ~0x30;
+			if (b[0] & 0x40)
+				b[0] |= 0x30;
+			if (b[0] & 0x80)
+				b[0] |= 0xC0;
+			else
+				b[0] &= ~0xC0;
+			write(STDOUT_FILENO, b, sizeof(b));
+		}
+	return 1;
+}
+
 static bool vf_get_options(int *argc, const char ***argv)
 {
 	static const struct HXoption options_table[] = {
 		{.sh = 'G', .type = HXTYPE_VAL, .val = CMD_FNT2PSF2,
 		 .ptr = &Opt.action, .help = "Convert a raw FNT to PSF2"},
+		{.sh = 'W', .type = HXTYPE_VAL, .val = CMD_FNT2PSF2_40,
+		 .ptr = &Opt.action, .help = "Convert a raw FNT to 40/PSF2"},
 		{.sh = 'D', .type = HXTYPE_STRING, .ptr = &Opt.directory,
 		 .help = "Directory to operate on", .htyp = "DIR"},
 		{.sh = 'E', .type = HXTYPE_VAL, .val = CMD_EMPTY,
@@ -444,6 +491,9 @@ static int main2(int argc, const char **argv)
 			break;
 		case CMD_FNT2PSF2:
 			ret = vf_convert_fnt2psf2();
+			break;
+		case CMD_FNT2PSF2_40:
+			ret = vf_convert_fnt2psf2_40();
 			break;
 		case CMD_CREATE:
 			ret = vf_create(Opt.file, Opt.directory);

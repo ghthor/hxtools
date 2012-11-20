@@ -4,7 +4,7 @@
 vfontas \(em VGA font file assembler
 .SH Syntax
 .PP
-\fBvfontas\fP [\fB\-EG\fP] [\fB\-D\fP \fIdirectory\fP] [\fB\-c|\-\-create\fP]
+\fBvfontas\fP [\fB\-EGW\fP] [\fB\-D\fP \fIdirectory\fP] [\fB\-c|\-\-create\fP]
 [\fB\-f\fP \fIfile\fP] [\fB\-x|\-\-extract\fP]
 .SH Description
 .PP
@@ -22,6 +22,10 @@ Create an empty font file.
 \fB\-G\fP
 Convert a raw 8x16 FNT file from stdin to a 9x16 PSF2 suitable for fbdev, while
 extending the 8th column to the 9th column like the PC VGA BIOS mode 01h does.
+.TP
+\fB\-W\fP
+Convert a raw 8x16 FNT file from stdin to a 16x16 PSF2, mimicing 40x25 text
+mode on a 80x25 display.
 .TP
 \fB\-c\fP, \fB\-\-create\fP
 Create a new FNT file by readnig all glyphs from the directory specified by
